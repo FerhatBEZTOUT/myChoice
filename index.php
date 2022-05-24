@@ -1,3 +1,7 @@
+<?php 
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +13,12 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content">
-            <div class="col col-md-6">Bonjour</div>
-            <div class="col col-md-6">Bonjour</div>
-        </div>
+    <div class="d-flex justify-content align-center">
+        <form action="Controller/seConnecter.php">
+            <input type="email" name="email" id="email" placeholder="Email" value="">
+            <input type="password" name="password" id="password" placeholder="Mot de passe" value="">
+            <input type="button" sub>
+        </form>
     </div>
 </body>
 </html>
