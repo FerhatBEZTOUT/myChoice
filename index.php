@@ -13,12 +13,24 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-    <div class="d-flex justify-content align-center">
-        <form action="Controller/seConnecter.php">
-            <input type="email" name="email" id="email" placeholder="Email" value="">
-            <input type="password" name="password" id="password" placeholder="Mot de passe" value="">
-            <input type="button" sub>
-        </form>
-    </div>
+    
+        <!-- <div class="d-flex justify-content-center align-items-center vh-100">
+             <form action="Controller/seConnecter.php" method="post">
+                <form>
+                <div class="row form-group">
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Email" value="">
+                </div>
+                <div class="row form-group">
+                    <input class="form-control" type="password" name="password" id="password" placeholder="Mot de passe" value="">
+                </div>
+                <div class="row form-group">
+                    <input class="btn btn-success" type="submit" role="button" value="Se connecter" >
+                </div>
+            
+                
+            </form>
+        </div> -->
+   
+    
 </body>
 </html>
