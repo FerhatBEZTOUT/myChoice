@@ -23,3 +23,8 @@ body {
 .monNavBar{
     background-color: rgba(0, 0, 0, 0.6) !important;
 }
+
+#errorMsg {
+    color : rgb(255, 255, 255);
+    margin-top:10px;
+}

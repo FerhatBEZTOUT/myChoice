@@ -1,7 +1,16 @@
 <?php
+    session_start();
     include_once 'Model/Utilisateur.php';
-    $user = new Utilisateur("BEZTOUT","Ferhat");
+    
+    if(isset($_SESSION['connecté'])) {
+        $userType = $_SESSION['userType'];
 
+        if ($userType=='admin') {
+            header('location:dashboard');
+        } else {
+            header('location:mafiche');
+        }
+    }
 ?>
 
 
@@ -16,7 +25,7 @@
     <link rel="stylesheet" href="styles/index.css">
     <link rel="shortcut icon" href="icon/ananas.ico" type="image/x-icon">
     
-    <title><?= $user->getNom() .' '. $user->getPrenom()?></title>
+    <title>MyChoice - Connexion</title>
 </head>
 
 <body>
@@ -51,13 +60,14 @@
                                 </svg>
                             </div>
 
-                            <form method="POST">
+                            <form method="POST" id="postFormLogin">
                                 <input type="email" name="email" id="email" class="form-control my-4 py-2"
                                     placeholder="Email">
                                 <input type="password" name="password" id="password" class="form-control my-4 py-2"
                                     placeholder="Mot de passe">
                                 <div class="text-center">
-                                    <button type="button" id="btnSeConnecter" value="Se connecter" class="btn btn-success">Se connecter</button>
+                                    <button type="submit" id="btnSeConnecter" value="Se connecter" class="btn btn-success">Se connecter</button>
+                                    <h6 id="errorMsg"></h6>
                                 </div>
 
                             </form>
