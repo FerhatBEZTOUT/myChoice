@@ -15,26 +15,29 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="shortcut icon" href="icon/ananas.ico" type="image/x-icon">
+    
     <title><?= $user->getNom() .' '. $user->getPrenom()?></title>
 </head>
 
 <body>
+    
     <div class="container-fluid monNavBar">
         <nav class="monNavBar row navbar navbar-dark bg-dark">
             <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center row mx-auto">
                 <div class="col-12 text-center"><img src="img/ananas.png" width="50" height="50"
                         class="d-inline-block align-top" alt=""></div>
                 <div class="titre-logo col-12">
-                    <h6 class="text-center">MyChoice</h6>
+                    <h6 class="text-center">Myice</h6>
                 </div>
             </div>
             <div class="col-10 col-sm-10">
-                <h1 class="titre-page-connexion text-center">MyChoice</h1>
+                <h1 class="titre-page-connexion text-center" id="titreMyChoice">MyChoice</h1>
             </div>
         </nav>
     </div>
     
     <section>
+    <button id="monboutton">click</button>
         <div class="container mt-5 pt-5">
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6 m-auto">
@@ -55,7 +58,7 @@
                                 <input type="password" name="password" id="password" class="form-control my-4 py-2"
                                     placeholder="Mot de passe">
                                 <div class="text-center">
-                                    <input type="submit" role="button" value="Se connecter" class="btn btn-success">
+                                    <input type="submit" role="button" id="btnSeConnecter" value="Se connecter" class="btn btn-success">
                                 </div>
 
                             </form>
@@ -65,8 +68,9 @@
             </div>
         </div>
     </section>
-
-    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="scripts/jquery.js"></script>
+    <!-- <script src="bootstrap/js/bootstrap.js"></script> -->
+    <script src="scripts/index.js"></script>
 </body>
 
 </html>
