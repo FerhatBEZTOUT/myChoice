@@ -27,17 +27,16 @@
                 <div class="col-12 text-center"><img src="img/ananas.png" width="50" height="50"
                         class="d-inline-block align-top" alt=""></div>
                 <div class="titre-logo col-12">
-                    <h6 class="text-center">Myice</h6>
+                    <h6 class="text-center">MyChoice</h6>
                 </div>
             </div>
             <div class="col-10 col-sm-10">
-                <h1 class="titre-page-connexion text-center" id="titreMyChoice">MyChoice</h1>
+                <h1 class="titre-page-connexion text-center">MyChoice</h1>
             </div>
         </nav>
     </div>
     
     <section>
-    <button id="monboutton">click</button>
         <div class="container mt-5 pt-5">
             <div class="row">
                 <div class="col-12 col-sm-8 col-md-6 m-auto">
@@ -52,13 +51,13 @@
                                 </svg>
                             </div>
 
-                            <form action="">
+                            <form method="POST">
                                 <input type="email" name="email" id="email" class="form-control my-4 py-2"
                                     placeholder="Email">
                                 <input type="password" name="password" id="password" class="form-control my-4 py-2"
                                     placeholder="Mot de passe">
                                 <div class="text-center">
-                                    <input type="submit" role="button" id="btnSeConnecter" value="Se connecter" class="btn btn-success">
+                                    <button type="button" id="btnSeConnecter" value="Se connecter" class="btn btn-success">Se connecter</button>
                                 </div>
 
                             </form>

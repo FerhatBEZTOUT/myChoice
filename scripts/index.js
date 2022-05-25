@@ -1,9 +1,16 @@
 $(document).ready(function(){
-    $(".titre-page-connexion").click(function(){
-        $("div").hide();
+    $("#btnSeConnecter").click(function(){
+        getName();
     });
 
-    $("#monboutton").click(function() {
-        alert("hihi");
-    });
+    function getName() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','../Controller/process.php?name=Ferhat');
+
+        xhr.onload = function () {
+            console.log(this.response);
+        }
+
+        xhr.send();
+    }
   });
