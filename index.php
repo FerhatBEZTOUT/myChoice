@@ -78,7 +78,7 @@
         </div>
     </section>
     <script src="scripts/jquery.js"></script>
-    <!-- <script src="bootstrap/js/bootstrap.js"></script> -->
+    <script src="bootstrap/js/bootstrap.js"></script>
     <script src="scripts/index.js"></script>
 </body>
 

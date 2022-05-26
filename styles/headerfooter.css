@@ -1,0 +1,65 @@
+footer {
+    background-color: rgb(58, 151, 238);
+    color:white;
+   
+ 
+    
+}
+
+#lienUniv {
+    color: white;
+}
+
+.add {
+    color: rgb(15, 111, 221) !important;
+}
+
+.add:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(15, 111, 221) !important;
+}
+
+.modify {
+    color: rgb(221, 108, 15) !important;
+}
+
+.modify:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(221, 108, 15) !important;
+}
+
+.delete {
+    color: rgb(221, 39, 15) !important;
+}
+
+.delete:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(221, 39, 15) !important;
+}
+
+.dropdown-item {
+    font-size: large;
+}
+
+.menuNav {
+    margin-left: 12px;
+    color: rgb(250, 180, 63);
+}
+
+.menuNav:hover {
+    color: rgb(50, 179, 11);
+}
+
+.show {
+    color:rgb(50, 179, 11) !important;
+}
+
+.deconnect {
+    margin-left: 12px;
+    margin-right: 5px;
+    color:rgba(231, 34, 7, 0.849);
+}
+
+.deconnect:visited {
+    color:rgba(231, 34, 7, 0.849);
+}
