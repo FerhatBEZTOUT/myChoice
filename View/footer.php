@@ -7,9 +7,9 @@
     <!-- Copyright -->
     </footer>
     
-    <script src="../scripts/jquery.js"></script>
-    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/dashboard.js"></script>
+    <script src="http:\\myChoice/scripts/jquery.js"></script>
+    <script src="http:\\myChoice/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="http:\\myChoice/scripts/dashboard.js"></script>
 </body>
 
 </html>
