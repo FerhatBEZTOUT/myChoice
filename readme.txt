@@ -8,3 +8,12 @@
 7- Cliquez sur le boutton "Démarrer la création du VirtualHost"
 8- Cliquez avec le boutton droit sur l'icone WampServer dans la barre de tache Windows > Outils > Redémarre du serveur DNS 
 9- Vous pouvez maintenant accéder à votre site web en allant sur localhost > Vos VirtualHost ou en tapant l'adresse : localhost/myChoice
+
+
+Compte admin : 
+    email : sofiane.aissani@univ-bejaia.dz
+    password : 1970-01-01
+
+Compte etudiant :
+    email : ferhat.beztout@se-univ-bejaia.dz 
+    password : 1997-02-03
