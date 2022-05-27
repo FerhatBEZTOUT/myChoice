@@ -27,7 +27,7 @@ CREATE TABLE Specialite (
 	
 CREATE TABLE FicheVoeux (
 	idVoeux int NOT NULL AUTO_INCREMENT,
-	intituleFiche varchar(50) NOT NULL,
+	intituleFiche varchar(100) NOT NULL,
 	DateDebut date NOT NULL,
 	DateFin date NOT NULL,
 	Destination int,
@@ -114,9 +114,9 @@ INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Réseaux et systèmes 
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Ingénierie de la connaissance',4);		-- 9
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Informatique (R.N)",2);		-- 10
 
-INSERT INTO FicheVoeux (DateDebut,DateFin,destination) VALUES ("2022-04-27","2022-05-27",10);		-- 1
-INSERT INTO FicheVoeux (DateDebut,DateFin,destination) VALUES ("2022-04-27","2022-05-27",2);		-- 2
-INSERT INTO FicheVoeux (DateDebut,DateFin,destination) VALUES ("2022-04-27","2022-05-27",3);		-- 3
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 1","2022-04-27","2022-05-27",10);		-- 1
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 2","2022-04-27","2022-05-27",2);		-- 2
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 3","2022-04-27","2022-05-27",3);		-- 3
 
 INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (1,1);
 INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (1,2);
