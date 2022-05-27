@@ -27,31 +27,19 @@
         <div class="navbar-collapse collapse" id="navbarsExample03">
             <ul class="navbar-nav me-auto mb-2 mb-sm-0">
             
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle menuNav" href="#" id="menuFiche" data-bs-toggle="dropdown" aria-expanded="false">Fiche de voeux</a>
-                <ul class="dropdown-menu py-0" aria-labelledby="menuFiche">
-                <li><a class="dropdown-item add" href="http:\\myChoice/dashboard/fiches/add.php">Ajouter</a></li>
-                <li><a class="dropdown-item modify" href="http:\\myChoice/dashboard/fiches/edit.php">Modifier</a></li>
-                <li><a class="dropdown-item delete" href="http:\\myChoice/dashboard/fiches/delete.php">Supprimer</a></li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link menuNav" href="http:\\myChoice/dashboard/fiches/">Fiches de voeux</a>
+                
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle menuNav" href="#" id="menuSpecialite" data-bs-toggle="dropdown" aria-expanded="false">Spécialité</a>
-                <ul class="dropdown-menu py-0" aria-labelledby="menuSpecialite">
-                <li><a class="dropdown-item add" href="http:\\myChoice/dashboard/specialites/add.php">Ajouter</a></li>
-                <li><a class="dropdown-item modify" href="http:\\myChoice/dashboard/specialites/edit.php">Modifier</a></li>
-                <li><a class="dropdown-item delete" href="http:\\myChoice/dashboard/specialites/delete.php">Supprimer</a></li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link menuNav" href="http:\\myChoice/dashboard/specialites/">Spécialités</a>
+                
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle menuNav" href="#" id="menuMembre" data-bs-toggle="dropdown" aria-expanded="false">Membres</a>
-                <ul class="dropdown-menu py-0" aria-labelledby="menuMembre">
-                <li><a class="dropdown-item add" href="http:\\myChoice/dashboard/membres/add.php">Ajouter</a></li>
-                <li><a class="dropdown-item modify" href="http:\\myChoice/dashboard/membres/edit.php">Modifier</a></li>
-                <li><a class="dropdown-item delete" href="http:\\myChoice/dashboard/membres/delete.php">Supprimer</a></li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link menuNav" href="http:\\myChoice/dashboard/membres/">Membres</a>
+                
             </li>
 
             <li class="nav-item">

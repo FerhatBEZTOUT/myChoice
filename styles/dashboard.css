@@ -11,3 +11,19 @@
     cursor:pointer;
     
 }
+
+img {
+    opacity:0.9;
+}
+
+img:hover {
+    opacity:1;
+}
+
+svg {
+    opacity:0.9;
+}
+
+svg:hover {
+    opacity:1;
+}

@@ -27,6 +27,7 @@ CREATE TABLE Specialite (
 	
 CREATE TABLE FicheVoeux (
 	idVoeux int NOT NULL AUTO_INCREMENT,
+	intituleFiche varchar(50) NOT NULL,
 	DateDebut date NOT NULL,
 	DateFin date NOT NULL,
 	Destination int,
