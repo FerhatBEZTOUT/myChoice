@@ -1,5 +1,10 @@
 $(document).ready(function () {
     $("#btnSeConnecter").click(function () {
+
+        $("#postFormLogin").submit(function (e) {
+            e.preventDefault();
+
+        });
             var email_a = document.getElementById("email").value.trim();
             var mdp_a = document.getElementById("password").value.trim();
             
@@ -27,10 +32,7 @@ $(document).ready(function () {
             }
         );
 
-        $("#postFormLogin").submit(function (e) {
-            e.preventDefault();
-
-        });
+        
     });
 
 

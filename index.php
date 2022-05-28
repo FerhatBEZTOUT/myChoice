@@ -66,7 +66,7 @@
                                 <input type="password" name="password" id="password" class="form-control my-4 py-2"
                                     placeholder="Mot de passe">
                                 <div class="text-center">
-                                    <button type="submit" id="btnSeConnecter" value="Se connecter" class="btn btn-success">Se connecter</button>
+                                    <button type="button" id="btnSeConnecter" value="Se connecter" class="btn btn-success">Se connecter</button>
                                     <h6 id="errorMsg"></h6>
                                 </div>
 
@@ -80,6 +80,12 @@
     <script src="scripts/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.js"></script>
     <script src="scripts/index.js"></script>
+   
+   <?php 
+    // include_once 'queries/specialite.php';
+
+    // echo htmlentities(getNomSpecialite(1),ENT_QUOTES,"ISO-8859-1") ;
+   ?>
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 footer {
     background-color: rgb(58, 151, 238);
     color:white;
+    margin-top: auto;
    
  
     
@@ -62,4 +63,10 @@ footer {
 
 .deconnect:visited {
     color:rgba(231, 34, 7, 0.849);
+}
+
+body {
+    display:flex;
+    min-height:100vh;
+    flex-direction: column;
 }

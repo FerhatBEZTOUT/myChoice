@@ -9,7 +9,8 @@
     
     <script src="http:\\myChoice/scripts/jquery.js"></script>
     <script src="http:\\myChoice/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="http:\\myChoice/scripts/dashboard.js"></script>
+    <script type="text/javascript" src="http:\\myChoice\scripts\bootstrap-datepicker.js"></script>
+    <script src="http:\\myChoice/scripts/functions.js"></script>
 </body>
 
 </html>

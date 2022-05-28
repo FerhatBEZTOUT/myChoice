@@ -26,13 +26,14 @@ CREATE TABLE Specialite (
 	
 	
 CREATE TABLE FicheVoeux (
-	idVoeux int NOT NULL AUTO_INCREMENT,
+	idFiche int NOT NULL AUTO_INCREMENT,
 	intituleFiche varchar(100) NOT NULL,
 	DateDebut date NOT NULL,
 	DateFin date NOT NULL,
+	acheve boolean,
 	Destination int,
 	
-	CONSTRAINT pk_FicheVoeux PRIMARY KEY (idVoeux),
+	CONSTRAINT pk_FicheVoeux PRIMARY KEY (idFiche),
 	CONSTRAINT fk_FicheVoeux_specialite FOREIGN KEY (Destination) REFERENCES Specialite(idSpecialite)
 	) ENGINE="innoDB";
 	
@@ -45,6 +46,7 @@ CREATE TABLE Utilisateur (
 	password varchar(40) NOT NULL,
 	isAdmin boolean NOT NULL,
 	userType varchar(30) NOT NULL,
+	licenceTrois boolean,
 	anneeCourante int,
 	specialiteCourante int,
 	specialiteFuture int,
@@ -72,24 +74,25 @@ CREATE TABLE Moyenne (
 	)ENGINE="innoDB";
 
 -- Relation Contenir renommée en SpecialiteVoeux
-CREATE TABLE SpecialiteVoeux(
-	idVoeux int,
+CREATE TABLE SpecialiteFiche(
+	idFiche int,
 	idSpecialite int,
+	nbrPlaces int,
 	
-	CONSTRAINT pk_specialiteVoeux PRIMARY KEY (idVoeux,idSpecialite),
-	CONSTRAINT fk_specialiteVoeux_Voeux FOREIGN KEY (idVoeux) REFERENCES ficheVoeux(idVoeux),
-	CONSTRAINT fk_specialiteVoeux_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT pk_specialiteFiche PRIMARY KEY (idFiche,idSpecialite),
+	CONSTRAINT fk_specialiteFiche_Voeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche),
+	CONSTRAINT fk_specialiteFiche_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
 )ENGINE="innoDB";
 
 CREATE TABLE Voeux (
 	idUser int,
-	idVoeux int,
+	idFiche int,
 	idSpecialite int,
 	ordre int,
 	
-	CONSTRAINT pk_voeux PRIMARY KEY (idUser,idVoeux,idSpecialite),
+	CONSTRAINT pk_voeux PRIMARY KEY (idUser,idFiche,idSpecialite),
 	CONSTRAINT fk_voeux_utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser),
-	CONSTRAINT fk_voeux_ficheVoeux FOREIGN KEY (idVoeux) REFERENCES ficheVoeux(idVoeux),
+	CONSTRAINT fk_voeux_ficheVoeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche),
 	CONSTRAINT fk_voeux_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
 )ENGINE="innoDB";
 
@@ -108,40 +111,39 @@ INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Réseaux et sécurité
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Informatique (M.I)",3);  -- 3
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Génie Logiciel',4);  -- 4
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Intelligence artificielle',4);  -- 5
-INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Systèmes complexes et technologie de l'information et du contrôle",4);  -- 6
-INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Administration et sécurité des réseaux',4);	-- 7
-INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Réseaux et systèmes distribués',4);		-- 8
-INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Ingénierie de la connaissance',4);		-- 9
-INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Informatique (R.N)",2);		-- 10
+INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Administration et sécurité des réseaux',4);	-- 6
+INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Réseaux et systèmes distribués',4);		-- 7
+INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Ingénierie de la connaissance',4);		-- 8
+INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Informatique (R.N)",2);		-- 9
 
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 1","2022-04-27","2022-05-27",10);		-- 1
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 2","2022-04-27","2022-05-27",2);		-- 2
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,destination) VALUES ("Fiche 3","2022-04-27","2022-05-27",3);		-- 3
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 1","2022-04-27","2022-05-27",false,9);		-- 1
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 2","2022-04-27","2022-05-27",false,2);		-- 2
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 3","2022-04-27","2022-05-27",false,3);		-- 3
 
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (1,1);
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (1,2);
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (2,4);
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (2,5);
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (2,7);
-INSERT INTO SpecialiteVoeux(idVoeux,idSpecialite) VALUES (2,8);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,1,20);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,2,30);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,4,20);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,5,40);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,7,10);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,8,30);
 
 
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('beztout','ferhat','1997-02-03','ferhat.beztout@se.univ-bejaia.dz','1997-02-03',false,'etd',2,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('beztout','thirinasse','2001-09-29','thirinasse.beztout@se.univ-bejaia.dz','2001-09-29',false,'etd',2,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('boudjaoui','imene','2002-01-12','imene.boudjaoui@se.univ-bejaia.dz','2002-01-12',false,'etd',2,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('boubadra ','melissa','2001-04-10','melissa.boubadra @se.univ-bejaia.dz','2001-04-10',false,'etd',2,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('berreguia','rahma','2000-02-24','rahma.berreguia@se.univ-bejaia.dz','2000-02-24',false,'etd',3,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('bouamama','melissa','2001-03-03','melissa.bouamama@se.univ-bejaia.dz','2001-03-03',false,'etd',3,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('bournine','ikram','2002-01-30','ikram.bournine@se.univ-bejaia.dz','2002-01-30',false,'etd',3,3);
-INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,anneeCourante,specialiteCourante) 
-VALUES ('aissani','sofiane','1970-01-01','sofiane.aissani@univ-bejaia.dz','1970-01-01',true,'admin',NULL,NULL);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('beztout','ferhat','1997-02-03','ferhat.beztout@se.univ-bejaia.dz','1997-02-03',false,'etd',true,2,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('beztout','thirinasse','2001-09-29','thirinasse.beztout@se.univ-bejaia.dz','2001-09-29',false,'etd',true,2,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('boudjaoui','imene','2002-01-12','imene.boudjaoui@se.univ-bejaia.dz','2002-01-12',false,'etd',true,2,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('boubadra ','melissa','2001-04-10','melissa.boubadra @se.univ-bejaia.dz','2001-04-10',false,'etd',true,2,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('berreguia','rahma','2000-02-24','rahma.berreguia@se.univ-bejaia.dz','2000-02-24',false,'etd',true,3,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('bouamama','melissa','2001-03-03','melissa.bouamama@se.univ-bejaia.dz','2001-03-03',false,'etd',true,3,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('bournine','ikram','2002-01-30','ikram.bournine@se.univ-bejaia.dz','2002-01-30',false,'etd',true,3,3);
+INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
+VALUES ('aissani','sofiane','1970-01-01','sofiane.aissani@univ-bejaia.dz','1970-01-01',true,'admin',false,NULL,NULL);
 
 
 INSERT INTO Moyenne VALUES (1000,1,3,12.5,0,0,0);

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http:\\myChoice\bootstrap\css\bootstrap.css">
     <link rel="stylesheet" href="http:\\myChoice\styles\headerfooter.css">
+    
+    <link rel="stylesheet" href="http:\\myChoice\styles\bootstrap-datepicker.css">
     <link rel="stylesheet" href="http:\\myChoice\styles\dashboard.css">
     
     <link rel="shortcut icon" href="http:\\myChoice/icon/ananas.ico" type="image/x-icon">
