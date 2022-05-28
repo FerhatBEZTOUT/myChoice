@@ -58,12 +58,13 @@ footer {
 .deconnect {
     margin-left: 12px;
     margin-right: 5px;
-    color:rgba(231, 34, 7, 0.849);
+    color:rgba(247, 243, 242, 0.849);
 }
 
-.deconnect:visited {
-    color:rgba(231, 34, 7, 0.849);
+.deconnect:hover {
+    color:rgb(245, 45, 10);
 }
+
 
 body {
     display:flex;
