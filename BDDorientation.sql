@@ -30,7 +30,7 @@ CREATE TABLE FicheVoeux (
 	intituleFiche varchar(100) NOT NULL,
 	DateDebut date NOT NULL,
 	DateFin date NOT NULL,
-	acheve boolean,
+	acheve boolean default false,
 	Destination int,
 	
 	CONSTRAINT pk_FicheVoeux PRIMARY KEY (idFiche),

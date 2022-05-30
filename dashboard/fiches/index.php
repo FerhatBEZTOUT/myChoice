@@ -1,10 +1,13 @@
 <?php
 
 include_once '../../Controller/checkConnexion.php';
-$titrePage = "Accueil - Admin";
+include_once '../../Controller/specialites.php';
+$titrePage = "Admin - Fiches de voeux";
 include_once '../../View/header.php';
 ?>
-
+<div class="container p-3 mt-2 text-center">
+    <h3 class="titrePage">Fiches de voeux existantes</h3>
+</div>
 <div class="container-fluid p-5">
     <a href="add.php">
         <div class="btn btn-success mb-5">
@@ -31,7 +34,7 @@ include_once '../../View/header.php';
                             </select></th>
                         <th scope="col"><select class="form-select" aria-label="Etat" id="rechDestination">
                                 <option value="0" selected>Tous</option>
-                                <?php include_once __DIR__ . '/../../Controller/specialites.options.php' ?>
+                                <?php remplirOptionsSpecialite() ?>
                             </select></th>
                             <th scope="col" style="width:100px ;"> </th>
                     </tr>

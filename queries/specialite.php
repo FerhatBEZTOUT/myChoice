@@ -27,4 +27,17 @@ function getNomSpecialite($id){
     }
 }
 
+
+function getIdSpecialite($nom){
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT nomSpecialite FROM specialite WHERE idSpecialite=?");
+        $request->execute(array($nom));
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result->nomSpecialite;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
 ?>

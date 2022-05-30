@@ -1,7 +1,11 @@
 <?php
 include_once '../../Controller/checkConnexion.php';
-$titrePage = "Accueil - Admin";
+$titrePage = "Supression de fiche de voeux";
 include_once '../../View/header.php';
+include_once '../../queries/fiches.php';
+$id = $_GET['id'];
+deleteFiche($id);
+header("location: ../fiches");
 ?>
 
 

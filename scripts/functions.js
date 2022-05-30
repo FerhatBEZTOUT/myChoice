@@ -12,6 +12,16 @@ $(document).ready(function () {
     'autoclose': 'true'
   })
 
+  $("#addDateDebut").datepicker({
+    'format': 'yyyy-mm-dd',
+    'autoclose': 'true'
+  })
+
+  $("#addDateFin").datepicker({
+    'format': 'yyyy-mm-dd',
+    'autoclose': 'true'
+  })
+
 
 
 
@@ -63,7 +73,7 @@ $(document).ready(function () {
       var destinationTd = allTr[i].getElementsByTagName("td")[4].innerText.toUpperCase();
 
       if (
-        intituleTd.indexOf(intitule) > -1
+        intituleTd.indexOf(intitule) == 0
         && dateDebutTd.indexOf(dateDebut) > -1
         && dateFinTd.indexOf(dateFin) > -1
         && ficheAcheveeTd.indexOf(ficheAchevee) > -1
