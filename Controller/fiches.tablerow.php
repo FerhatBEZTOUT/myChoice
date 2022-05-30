@@ -12,7 +12,7 @@ foreach ($listFiche as $elem) {
     if ($elem->acheve==1) {
         $etat ="achevé";
     } else {
-        $etat = "non achevé";
+        $etat = "en cours";
     }
     $nomSpec = htmlentities(getNomSpecialite($elem->Destination),ENT_QUOTES,"ISO-8859-1");
     

@@ -27,7 +27,7 @@ include_once '../../View/header.php';
                         <th scope="col"><select class="form-select" aria-label="Etat" id="rechFicheAchevee">
                                 <option value="0" selected>Tous</option>
                                 <option value="1">Achevé</option>
-                                <option value="2">Non achevé</option>
+                                <option value="2">En cours</option>
                             </select></th>
                         <th scope="col"><select class="form-select" aria-label="Etat" id="rechDestination">
                                 <option value="0" selected>Tous</option>
