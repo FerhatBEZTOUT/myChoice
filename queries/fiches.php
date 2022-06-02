@@ -88,4 +88,30 @@ function existSpecialitesFiche($idFiche,$idSpecia) {
     }
 }
 
+
+function insertSpecialiteFiche($id,$idSpecia,$nbrplc) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) values (?,?,?)");
+        $request->execute(array($id,$idSpecia,$nbrplc));
+    } catch (PDOException $e) {
+        echo $e;
+    }
+
+}
+
+
+function deleteSpecialiteFiche($id,$idSpecia) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("DELETE FROM SpecialiteFiche WHERE idFiche=? AND idSpecialite=?");
+        $request->execute(array($id,$idSpecia));
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
+
+
+
 ?>

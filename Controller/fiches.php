@@ -7,7 +7,7 @@ function remplirSpecialitesFiche($idFiche) {
     
     $listSpecialite = getSpecialites();
     global $arraySpecia;
-    
+
     foreach ($listSpecialite as $elem) {
        
         $id = $elem->idSpecialite;
@@ -49,6 +49,38 @@ function remplirSpecialitesFiche($idFiche) {
     }
 }
 
+
+function addSpecialitesFiche() {
+    
+    $listSpecialite = getSpecialites();
+    global $arraySpecia;
+
+    foreach ($listSpecialite as $elem) {
+       
+        $id = $elem->idSpecialite;
+        $nomSpecia = htmlentities(getNomSpecialite($id),ENT_QUOTES,"ISO-8859-1");
+            $arraySpecia[$id] = true;
+            echo '<li class="row">
+                        <div class="col-12 col-md-6">
+                        <input type="checkbox" name="spec'.$id.'" id="spec'.$id.'" value="'.$id.'">
+                        <label for="spec'.$id.'">'.$nomSpecia.'</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                        <label class="sousTitreNbrPlaces" for="spec'.$id.'nbr">Nombre de places</label>
+                        <input class="text-center" type="number" name="spec'.$id.'nbr" id="spec'.$id.'nbr" placeholder="Nombre de places" >
+                        </div>
+                        
+                    </li>
+                    <hr>';
+        
+
+        
+    }
+}
+
+
+
+
 function remplirTableFiche() {
 
     $listFiche = getFiches();
@@ -84,4 +116,7 @@ function remplirTableFiche() {
     }
     
 }
+
+
+
 ?>

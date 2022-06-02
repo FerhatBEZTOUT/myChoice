@@ -1,10 +1,12 @@
 <?php
 include_once '../../Controller/checkConnexion.php';
 include_once '../../Controller/specialites.php';
+include_once '../../Controller/fiches.php';
 $titrePage = "Ajouter une fiche de voeux";
 include_once '../../View/header.php';
 include_once '../../Controller/checkData.php';
 include_once '../../queries/fiches.php';
+include_once '../../queries/bddinfos.php';
 $msgError = "";
 $arraySpecia = [];
 if (
@@ -23,7 +25,7 @@ if (
             $msgError = "Date fin doit être supérieur à date début";
         } else {
             addFiche($intitule,$dateDeb,$dateFin,$destin);
-            header("location:../fiches");
+          header("location:../fiches");
         }
     } else if (!$intitule && !myCheckDate($dateDeb) && !myCheckDate($dateFin) && !$destin) {
         $msgError = "Tous les champs sont incorrects ou incomplets";
@@ -52,10 +54,25 @@ if (
         <div class="form-group mb-3">
             <label class="myLabel"  for="addSpecialites">Spécialités de la fiche de voeux</label>
             <ul class="form-control" style="list-style: none;">
-                <?php remplirSpecialitesFiche($id) ?>
+                <?php addSpecialitesFiche() ?>
             </ul>
         </div>
+        <?php
+        $myArray = [];
+        foreach ($arraySpecia as $idSpecia => $value) {
+            if(isset($_POST['spec'.$idSpecia]) && isset($_POST['spec'.$idSpecia.'nbr'])) {
+                $nbrplc = $_POST['spec'.$idSpecia.'nbr'];
+                insertSpecialiteFiche(getAutoIncrementValue()-1,$idSpecia,$nbrplc);
+            }
+        }
+        
 
+        echo '<pre>';
+        print_r($arraySpecia);
+        // if(isset($_SESSION['myArray']))
+        // print_r($_SESSION['myArray']);
+        echo '<pre>';
+        ?>
         <div class="form-group mb-3">
             <label class="myLabel"  for="addDateDebut">Date début</label>
             <input class="form-control" type="text" name="addDateDebut" id="addDateDebut" placeholder="Date début" autocomplete="off" required>
