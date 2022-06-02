@@ -16,11 +16,11 @@ CREATE TABLE AnneeEtud (
 CREATE TABLE Specialite (
 	idSpecialite int NOT NULL AUTO_INCREMENT,
 	nomSpecialite varchar(100) NOT NULL,
-	anneeDebut int NOT NULL,
+	anneeDebut int,
 	programme varchar(255),
 	
 	CONSTRAINT pk_specialite PRIMARY KEY (idSpecialite),
-	CONSTRAINT fk_specialite_Voeux FOREIGN KEY(anneeDebut) REFERENCES AnneeEtud(idAnneeEtud)
+	CONSTRAINT fk_specialite_Voeux FOREIGN KEY(anneeDebut) REFERENCES AnneeEtud(idAnneeEtud) ON DELETE SET NULL ON UPDATE CASCADE
 	)ENGINE="innoDB";
 	
 	
@@ -31,10 +31,10 @@ CREATE TABLE FicheVoeux (
 	DateDebut date NOT NULL,
 	DateFin date NOT NULL,
 	acheve boolean default false,
-	Destination int,
+	Destination int NOT NULL,
 	
 	CONSTRAINT pk_FicheVoeux PRIMARY KEY (idFiche),
-	CONSTRAINT fk_FicheVoeux_specialite FOREIGN KEY (Destination) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT fk_FicheVoeux_specialite FOREIGN KEY (Destination) REFERENCES Specialite(idSpecialite) ON DELETE CASCADE ON UPDATE CASCADE
 	) ENGINE="innoDB";
 	
 CREATE TABLE Utilisateur (
@@ -52,9 +52,9 @@ CREATE TABLE Utilisateur (
 	specialiteFuture int,
 	
 	CONSTRAINT pk_utilisateur PRIMARY KEY (idUser),
-	CONSTRAINT fk_utilisateur_anneeEtud FOREIGN KEY(anneeCourante) REFERENCES AnneeEtud(idAnneeEtud),
-	CONSTRAINT fk_utilisateur_specialite1 FOREIGN KEY(specialiteCourante) REFERENCES Specialite(idSpecialite),
-	CONSTRAINT fk_utilisateur_specialite2 FOREIGN KEY(specialiteFuture) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT fk_utilisateur_anneeEtud FOREIGN KEY(anneeCourante) REFERENCES AnneeEtud(idAnneeEtud) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT fk_utilisateur_specialite1 FOREIGN KEY(specialiteCourante) REFERENCES Specialite(idSpecialite) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT fk_utilisateur_specialite2 FOREIGN KEY(specialiteFuture) REFERENCES Specialite(idSpecialite) ON DELETE SET NULL ON UPDATE CASCADE
 	
 	) AUTO_INCREMENT=1000 , ENGINE="innoDB";
 	
@@ -68,9 +68,9 @@ CREATE TABLE Moyenne (
 	dette int,
 	
 	CONSTRAINT pk_moyenne PRIMARY KEY(idUser,idAnneeEtud,idSpecialite),
-	CONSTRAINT fk_Moyenne_Utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser),
-	CONSTRAINT fk_Moyenne_AnneeEtude FOREIGN KEY (idAnneeEtud) REFERENCES AnneeEtud(idAnneeEtud),
-	CONSTRAINT fk_Moyenne_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT fk_Moyenne_Utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Moyenne_AnneeEtude FOREIGN KEY (idAnneeEtud) REFERENCES AnneeEtud(idAnneeEtud) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Moyenne_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite) ON DELETE CASCADE ON UPDATE CASCADE
 	)ENGINE="innoDB";
 
 -- Relation Contenir renommée en SpecialiteVoeux
@@ -80,8 +80,8 @@ CREATE TABLE SpecialiteFiche(
 	nbrPlaces int,
 	
 	CONSTRAINT pk_specialiteFiche PRIMARY KEY (idFiche,idSpecialite),
-	CONSTRAINT fk_specialiteFiche_Voeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche),
-	CONSTRAINT fk_specialiteFiche_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT fk_specialiteFiche_Voeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_specialiteFiche_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE="innoDB";
 
 CREATE TABLE Voeux (
@@ -91,9 +91,9 @@ CREATE TABLE Voeux (
 	ordre int,
 	
 	CONSTRAINT pk_voeux PRIMARY KEY (idUser,idFiche,idSpecialite),
-	CONSTRAINT fk_voeux_utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser),
-	CONSTRAINT fk_voeux_ficheVoeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche),
-	CONSTRAINT fk_voeux_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite)
+	CONSTRAINT fk_voeux_utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_voeux_ficheVoeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_voeux_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE="innoDB";
 
 

@@ -2,6 +2,7 @@
 
 include_once '../../Controller/checkConnexion.php';
 include_once '../../Controller/specialites.php';
+include_once '../../Controller/fiches.php';
 $titrePage = "Admin - Fiches de voeux";
 include_once '../../View/header.php';
 ?>
@@ -55,7 +56,7 @@ include_once '../../View/header.php';
                 </tr>
             </thead>
             <tbody>
-                <?php include_once __DIR__.'/../../Controller/fiches.tablerow.php'; ?>
+                <?php remplirTableFiche() ?>
             </tbody>
         </table>
     </div>

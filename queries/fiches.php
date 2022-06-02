@@ -63,6 +63,29 @@ function deleteFiche($id) {
 }
 
 
+function specialitesFiche($idFiche) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT * FROM SpecialiteFiche WHERE idFiche=?");
+        $request->execute(array($idFiche));
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
 
+
+function existSpecialitesFiche($idFiche,$idSpecia) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT * FROM SpecialiteFiche WHERE idFiche=? AND idSpecialite=?");
+        $request->execute(array($idFiche,$idSpecia));
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
 
 ?>

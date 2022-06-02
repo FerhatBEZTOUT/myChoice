@@ -6,11 +6,13 @@ include_once '../../View/header.php';
 include_once '../../Controller/checkData.php';
 include_once '../../queries/fiches.php';
 $msgError = "";
+$arraySpecia = [];
 if (
     isset($_POST['addIntitule'])
     && isset($_POST['addDateDebut'])
     && isset($_POST['addDateFin'])
     && isset($_POST['addDestination'])
+
 ) {
     $intitule = $_POST['addIntitule'];
     $dateDeb = $_POST['addDateDebut'];
@@ -43,20 +45,28 @@ if (
 <div class="container mx-auto px-5">
     <form method="POST" action="add.php">
         <div class="form-group mb-3">
-            <label for="addIntitule">Intitulé</label>
-            <input class="form-control" type="text" name="addIntitule" id="addIntitule" placeholder="Intitule" required>
+            <label class="myLabel" for="addIntitule">Intitulé</label>
+            <input class="form-control checkBoxSpecialites" type="text" name="addIntitule" id="addIntitule" placeholder="Intitule" required>
         </div>
+        
         <div class="form-group mb-3">
-            <label for="addDateDebut">Date début</label>
+            <label class="myLabel"  for="addSpecialites">Spécialités de la fiche de voeux</label>
+            <ul class="form-control" style="list-style: none;">
+                <?php remplirSpecialitesFiche($id) ?>
+            </ul>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="myLabel"  for="addDateDebut">Date début</label>
             <input class="form-control" type="text" name="addDateDebut" id="addDateDebut" placeholder="Date début" autocomplete="off" required>
         </div>
 
         <div class="form-group mb-3">
-            <label for="addDateFin">Date début</label>
+            <label class="myLabel"  for="addDateFin">Date début</label>
             <input class="form-control" type="text" name="addDateFin" id="addDateFin" placeholder="Date fin" autocomplete="off" required>
         </div>
         <div class="form-group mb-3">
-        <label for="addDateFin">Fiche de voeux destinée pour :</label>
+        <label class="myLabel" for="addDateFin">Fiche de voeux destinée pour :</label>
         <select class="form-select" aria-label="Etat" id="addDestination" name="addDestination" required>
             <option value="0" selected>Choisir une spécialité</option>
             <?php remplirOptionsSpecialite() ?>
