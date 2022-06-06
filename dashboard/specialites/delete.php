@@ -1,7 +1,11 @@
 <?php
 include_once '../../Controller/checkConnexion.php';
-$titrePage = "Accueil - Admin";
+$titrePage = "Supression de spécialité";
 include_once '../../View/header.php';
+include_once '../../queries/specialite.php';
+$id = $_GET['id'];
+deleteSpecia($id);
+header("location: ../specialites");
 ?>
 
 

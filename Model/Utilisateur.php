@@ -23,7 +23,7 @@ class Utilisateur {
 
     
     function email() {
-        return $this->prenom.'.'.$this->nom.'@se.univ-bejaia.dz';
+        return $this->prenom.'.'.$this->nom.'@univ-bejaia.dz';
     }
 
 

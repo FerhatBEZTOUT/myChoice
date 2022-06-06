@@ -66,12 +66,6 @@ if (
             }
         }
         
-
-        echo '<pre>';
-        print_r($arraySpecia);
-        // if(isset($_SESSION['myArray']))
-        // print_r($_SESSION['myArray']);
-        echo '<pre>';
         ?>
         <div class="form-group mb-3">
             <label class="myLabel"  for="addDateDebut">Date début</label>
