@@ -81,11 +81,7 @@
     <script src="bootstrap/js/bootstrap.js"></script>
     <script src="scripts/index.js"></script>
    
-   <?php 
-    // include_once 'queries/specialite.php';
-
-    // echo htmlentities(getNomSpecialite(1),ENT_QUOTES,"ISO-8859-1") ;
-   ?>
+   
 </body>
 
 </html>

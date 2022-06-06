@@ -27,14 +27,16 @@ if (isset($_GET['id'])) {
 
         if (isset($_POST['addUserNom'])
         && isset($_POST['addUserPrenom'])
+        && isset($_POST['addUserEmail'])
         && isset($_POST['addUserMdp'])
         && isset($_POST['addUserDate'])
         && isset($_POST['addUserAnnee'])
-        && isset($_POST['addUserSpecia']))  {
+        && isset($_POST['addUserSpecia'])
+        && isset($_POST['addUserSpeciaFuture']))  {
             
             $userNom = $_POST['addUserNom'];
             $userPrenom = $_POST['addUserPrenom'];
-            $userEmail = $userPrenom.'.'.$userNom.'@univ-bejaia.dz';
+            $userEmail = $_POST['addUserEmail'];
             $userNom =  ucfirst($userNom);
             $userPrenom = ucfirst($userPrenom);
             $userMdp = $_POST['addUserMdp'];
@@ -46,51 +48,85 @@ if (isset($_GET['id'])) {
                 $userLicence = 0;
             }
             $userSpecia = (int)$_POST['addUserSpecia'];
-            if (myCheckDate($userDate) && $userAnnee && $userSpecia && strlen($userMdp)>7) {
+            $userSpeciaFuture = (int)$_POST['addUserSpeciaFuture'];
+            
+            if (strlen($userMdp)==0) {
+                if (myCheckDate($userDate) && $userAnnee && $userSpecia && $userSpeciaFuture) {
+                 
+                    editEtdNoPass($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$userSpeciaFuture,$id);
+                    header("location:../membres");
+                } elseif (!myCheckDate($userDate)) {
+                    $msgError = "Date de naissance incorrete";
+                } elseif (!$userAnnee) {
+                    $msgError = "Choisissez une année";
+                } elseif (!$userSpecia) {
+                    $msgError = "Choisissez une spécialité courante";
+                } elseif (!$userSpeciaFuture) {
+                    $msgError = "Choisissez une spécialité future";
+                } else {
+                    $msgError = "Tous les champs doivent être remplis";
+                }
+            } 
+            
+            
+            elseif (myCheckDate($userDate) && $userAnnee && $userSpecia && $userSpeciaFuture && strlen($userMdp)>7) {
                  $userMdp = md5($userMdp);
-                addEtd($userNom,$userPrenom,$userDate,$userEmail,$userMdp,0,$userType,$userLicence,$userAnnee,$userSpecia);
-                echo $userNom.' '.$userPrenom.' '.$userEmail.' '.$userMdp.' '.$userDate.' '.$userType.' '.$userLicence.' '.$userSpecia.' '.$userAnnee;
-            } elseif (strlen($userMdp)<8) {
-                $msgError = "Mot de passe trop court";
+                editEtd($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$userLicence,$userAnnee,$userSpecia,$userSpeciaFuture,$id);
+                header("location:../membres");
             } elseif (!myCheckDate($userDate)) {
                 $msgError = "Date de naissance incorrete";
             } elseif (!$userAnnee) {
                 $msgError = "Choisissez une année";
             } elseif (!$userSpecia) {
-                $msgError = "Choisissez une spécialité";
+                $msgError = "Choisissez une spécialité courante";
+            } elseif (!$userSpeciaFuture) {
+                $msgError = "Choisissez une spécialité future";
+            } else {
+                $msgError = "Tous les champs doivent être remplis";
             }
-
-
-        } else {
-            $msgError = "Tous les champs doivent être remplis";
-        }
+        
+         } 
+        
     } else {
         if (isset($_POST['addUserNom'])
         && isset($_POST['addUserPrenom'])
+        && isset($_POST['addUserEmail'])
         && isset($_POST['addUserMdp'])
         && isset($_POST['addUserDate']))  {
             $userNom = $_POST['addUserNom'];
             $userPrenom = $_POST['addUserPrenom'];
-            $userEmail = $userPrenom.'.'.$userNom.'@univ-bejaia.dz';
+            $userEmail = $_POST['addUserEmail'];
             $userNom =  ucfirst($userNom);
             $userPrenom = ucfirst($userPrenom);
             $userMdp = $_POST['addUserMdp'];
             $userDate = $_POST['addUserDate'];
 
-            if (myCheckDate($userDate) && strlen($userMdp)>7) {
-                $userMdp = md5($userMdp);
-                addAdmin($userNom,$userPrenom,$userDate,$userEmail,$userMdp,true,$userType);
-            } elseif (strlen($userMdp)<8) {
-                $msgError = "Mot de passe trop court";
-            }
-            else {
-                $msgError = "Date de naissance incorrete";
-            }
-            
 
-        } else {
-            $msgError = "Tous les champs doivent être remplis";
-        }
+            if (strlen($userMdp)==0) {
+                if (myCheckDate($userDate)) {
+                    editAdminNoPass($userNom,$userPrenom,$userDate,$userEmail,$id);
+                    header("location:../membres");
+                }
+                elseif(!myCheckDate($userDate)) {
+                    $msgError = "Date de naissance incorrete";
+                } else {
+                    $msgError = "Tous les champs doivent être remplis";
+                }
+            }
+            elseif (myCheckDate($userDate) && strlen($userMdp)>7) {
+                $userMdp = md5($userMdp);
+                editAdmin($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$id);
+                header("location:../membres");
+            }
+            elseif(!myCheckDate($userDate)) {
+                $msgError = "Date de naissance incorrete";
+            } else {
+                $msgError = "Tous les champs doivent être remplis";
+            }
+        
+        } 
+          
+         
     }
 
 
@@ -113,55 +149,53 @@ if (isset($_GET['id'])) {
         
         <div class="form-group mb-3">
             <label class="myLabel" for="addUserNom">Nom</label>
-            <input class="form-control" type="text" name="addUserNom" id="addUserNom" placeholder="Nom" required>
+            <input class="form-control" type="text" name="addUserNom" id="addUserNom" placeholder="Nom" required value="<?= htmlentities($nomUser) ?>">
         </div>
 
         <div class="form-group mb-3">
             <label class="myLabel" for="addUserPrenom">Prénom</label>
-            <input class="form-control" type="text" name="addUserPrenom" id="addUserPrenom" placeholder="Prénom" required>
+            <input class="form-control" type="text" name="addUserPrenom" id="addUserPrenom" placeholder="Prénom" required value="<?= htmlentities($prenomUser) ?>">
         </div>
 
         <div class="form-group mb-3">
             <label class="myLabel" for="addUserEmail">Email</label>
-            <input class="form-control" type="text" name="addUserEmail" id="addUserEmail" placeholder="Email" required>
+            <input class="form-control" type="text" name="addUserEmail" id="addUserEmail" placeholder="Email" required value="<?= htmlentities($emailUser) ?>">
         </div>
 
         <div class="form-group mb-3">
             <label class="myLabel" for="addUserMdp">Mot de passe</label>
-            <input class="form-control" type="password" name="addUserMdp" id="addUserMdp" placeholder="Laisser vide pour ne pas modifier" required autocomplete="off">
+            <input class="form-control" type="password" name="addUserMdp" id="addUserMdp" placeholder="Laisser vide pour ne pas modifier" autocomplete="off">
         </div>
 
         <div class="form-group mb-3">
             <label class="myLabel" for="addUserDate">Date de naissance</label>
-            <input class="form-control" type="text" name="addUserDate" id="addUserDate" placeholder="Date de naissance" autocomplete="off" required>
+            <input class="form-control" type="text" name="addUserDate" id="addUserDate" placeholder="Date de naissance" autocomplete="off" required value="<?= htmlentities($dateNaissUser) ?>">
         </div>
 
         <div class="form-group mb-3" id="addUserAnneeDiv">
             <label class="myLabel" for="addUserAnnee">Année en cours</label>
-            <select class="form-select" aria-label="Etat" id="addUserAnnee" name="addUserAnnee" required>
-                <option value="0" selected>Choisir une année</option>
-                <option value="1" >Licence 1</option>
-                <option value="2" >Licence 2</option>
-                <option value="3" >Licence 3</option>
-                <option value="4" >Master 1</option>
-                <option value="5" >Master 2</option>
+            <select class="form-select" aria-label="Etat" id="addUserAnnee" name="addUserAnnee">
+                <option value="1" <?php if ($typeUser=='etd' && $anneeCouranteUser==1) echo 'selected'?>>Licence 1</option>
+                <option value="2" <?php if ($typeUser=='etd' && $anneeCouranteUser==2) echo 'selected'?>>Licence 2</option>
+                <option value="3" <?php if ($typeUser=='etd' && $anneeCouranteUser==3) echo 'selected'?>>Licence 3</option>
+                <option value="4" <?php if ($typeUser=='etd' && $anneeCouranteUser==4) echo 'selected'?>>Master 1</option>
+                <option value="5" <?php if ($typeUser=='etd' && $anneeCouranteUser==5) echo 'selected'?>>Master 2</option>
             </select>
         </div>
 
 
         <div class="form-group mb-3" id="addUserSpeciaDiv">
             <label class="myLabel" for="addUserSpecia">Spécialité courante</label>
-            <select class="form-select" aria-label="Etat" id="addUserSpecia" name="addUserSpecia" required>
-                <option value="0" selected>Choisir une spécialité</option>
-                <?php remplirOptionsSpecialite() ?>
+            <select class="form-select" aria-label="Etat" id="addUserSpecia" name="addUserSpecia" >
+                <?php if ($typeUser=='etd') remplirSpeciaWithValue($specialiteCouranteUser) ?>
             </select>
         </div>
 
         <div class="form-group mb-3" id="addUserSpeciaFutureDiv">
             <label class="myLabel" for="addUserSpeciaFuture">Spécialité future</label>
-            <select class="form-select" aria-label="Etat" id="addUserSpeciaFuture" name="addUserSpeciaFuture" required>
-                <option value="0" selected>Choisir une spécialité</option>
-                <?php remplirOptionsSpecialite() ?>
+            <select class="form-select" aria-label="Etat" id="addUserSpeciaFuture" name="addUserSpeciaFuture" >
+                <option value="0" selected >Aucune</option>
+                <?php if ($typeUser=='etd') remplirSpeciaWithValue($specialiteFutureUser) ?>
             </select>
         </div>
 
@@ -174,17 +208,18 @@ if (isset($_GET['id'])) {
     </form>
 </div>
 <?php
-if (isset($_GET['id'])) {
-    
-    if ($typeUser=='etd') {
 
-    } else {
+    
+    if ($typeUser=='admin') {
         echo '<script type="text/javascript">
         document.getElementById("addUserAnneeDiv").style.display="none";
+        document.getElementById("addUserAnneeDiv").removeAttribute("required");
         document.getElementById("addUserSpeciaDiv").style.display="none";
+        document.getElementById("addUserSpeciaDiv").removeAttribute("required");
         document.getElementById("addUserSpeciaFutureDiv").style.display="none";
+        document.getElementById("addUserAnneeDiv").removeAttribute("required");
         </script>';
     }
-}
+
 include_once '../../View/footer.php';
 ?>

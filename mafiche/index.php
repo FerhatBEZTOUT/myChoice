@@ -97,7 +97,7 @@ if (isset($_POST['ordre'])) {
     <div class="container py-4 text-center">
         <h2 class="titrePage">Bienvenue <?= $nomUser . ' ' . $prenomUser ?></h2>
     </div>
-    <div class="container d-flex flex-column vh-50 justify-content-center align-items-center">
+    <div class="container d-flex vh-50 justify-content-center align-items-center">
         <h3>Il n'y a pas de fiche disponible pour l'instant</h3>
     </div>
     <?php //remplirSpecialiteFiche() ?>

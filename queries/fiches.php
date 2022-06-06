@@ -29,6 +29,34 @@ function getFichesById($id) {
     
 }
 
+function getFichesBySpecialite($specia) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT * FROM FicheVoeux WHERE Destination=?");
+        $request->execute(array($specia));
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+
+    
+}
+
+function getSpecialitesOfFiche($fiche) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT * FROM SpecialiteFiche WHERE idFiche=?");
+        $request->execute(array($fiche));
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+
+    
+}
+
 function addFiche($intitule,$dateDeb,$dateFin,$destin) {
     global $bdd;
     try {

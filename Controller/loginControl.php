@@ -15,7 +15,7 @@
         else {
             try {
                 $requeteLogin = $bdd->prepare("SELECT * FROM Utilisateur WHERE email=? AND password=?");
-                $requeteLogin->execute(array($email,$mdp));
+                $requeteLogin->execute(array($email,md5($mdp)));
                 if ($requeteLogin->rowCount() == 1) {
                     session_start();
                     $user = $requeteLogin->fetch(PDO::FETCH_OBJ);

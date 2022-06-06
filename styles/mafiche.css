@@ -1,0 +1,86 @@
+
+
+.card {
+    background-color: rgba(0, 0, 0, 0.664) !important;
+    
+}
+
+.titre-logo {
+    color:rgb(250, 180, 63) !important;
+}
+
+.titre-page-connexion {
+    color: white;
+}
+
+.monNavBar{
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+#errorMsg {
+    color : rgb(255, 255, 255);
+    margin-top:10px;
+}
+
+.border-red {
+    border: 3px solid rgba(255, 0, 0, 0.822);
+}
+
+.ze-red {
+    border: 3px solid rgb(202, 54, 8);
+}
+
+
+
+body {
+    display:flex;
+    min-height:100vh;
+    flex-direction: column;
+}
+
+footer {
+    background-color: rgb(58, 151, 238);
+    color:white;
+    margin-top: auto;
+   
+ 
+    
+}
+
+#lienUniv {
+    color: white;
+}
+
+.deconnect {
+    margin-left: 12px;
+    margin-right: 5px;
+    color:rgba(247, 243, 242, 0.849);
+}
+
+.deconnect:hover {
+    color:rgb(245, 45, 10);
+}
+
+.titrePage {
+    color: rgb(17, 128, 231);
+}
+
+.msgError {
+    color: red;
+}
+
+.myDiv {
+    border-bottom: 2px solid rgb(17, 128, 231);
+}
+
+.myInput:disabled {
+    border:none;
+    color:black;
+    width: 40px;
+    
+    
+}
+
+.monTitre {
+    font-size: 15px;
+}

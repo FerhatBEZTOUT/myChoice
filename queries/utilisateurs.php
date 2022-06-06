@@ -61,12 +61,32 @@
         }
     }
 
+    function editAdminNoPass($nom,$prenom,$dateNaiss,$email,$id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("UPDATE Utilisateur SET nom=?,prenom=?,dateNaiss=?,email=? WHERE idUser=?");
+            $request->execute(array($nom,$prenom,$dateNaiss,$email,$id));
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
 
     function editEtd($nom,$prenom,$dateNaiss,$email,$password,$licenceTrois,$anneeCourante,$specialiteCourante,$specialiteFuture,$id) {
         global $bdd;
         try {
             $request = $bdd->prepare("UPDATE Utilisateur SET nom=?,prenom=?,dateNaiss=?,email=?,password=?,licenceTrois=?,anneeCourante=?,specialiteCourante=?,specialiteFuture=? WHERE idUser=?");
             $request->execute(array($nom,$prenom,$dateNaiss,$email,$password,$licenceTrois,$anneeCourante,$specialiteCourante,$specialiteFuture,$id));
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function editEtdNoPass($nom,$prenom,$dateNaiss,$email,$licenceTrois,$anneeCourante,$specialiteCourante,$specialiteFuture,$id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("UPDATE Utilisateur SET nom=?,prenom=?,dateNaiss=?,email=?,licenceTrois=?,anneeCourante=?,specialiteCourante=?,specialiteFuture=? WHERE idUser=?");
+            $request->execute(array($nom,$prenom,$dateNaiss,$email,$licenceTrois,$anneeCourante,$specialiteCourante,$specialiteFuture,$id));
         } catch (PDOException $e) {
             echo $e;
         }

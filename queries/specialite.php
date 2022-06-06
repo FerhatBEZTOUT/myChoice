@@ -27,6 +27,18 @@ function getNomSpecialite($id){
     }
 }
 
+function getProgrammeSpecialite($id) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT programme FROM specialite WHERE idSpecialite=?");
+        $request->execute(array($id));
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result->programme;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
 
 function getIdSpecialite($nom){
     global $bdd;
