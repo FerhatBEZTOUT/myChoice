@@ -50,7 +50,7 @@ include_once '../../View/header.php';
                     <th scope="col">Date début</th>
                     <th scope="col">Date fin</th>
                     <th scope="col">Etat</th>
-                    <th scope="col">Destination</th>
+                    <th scope="col">Spécialité concernée</th>
                     <th scope="col">Action</th>
 
                 </tr>
@@ -62,7 +62,7 @@ include_once '../../View/header.php';
     </div>
 
 
-
+    
 </div>
 
 <?php

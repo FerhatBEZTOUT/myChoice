@@ -85,7 +85,7 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="form-group mb-3">
-            <label class="myLabel" for="addDateFin">Date début</label>
+            <label class="myLabel" for="addDateFin">Date fin</label>
             <input class="form-control" type="text" name="addDateFin" id="addDateFin" placeholder="Date fin" autocomplete="off" required value="<?= htmlentities($champDateFin) ?>">
         </div>
         <div class="form-group mb-3">

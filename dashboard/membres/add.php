@@ -37,7 +37,7 @@ if (isset($_POST['addUserType'])) {
             if (myCheckDate($userDate) && $userAnnee && $userSpecia && strlen($userMdp)>7) {
                  $userMdp = md5($userMdp);
                 addEtd($userNom,$userPrenom,$userDate,$userEmail,$userMdp,0,$userType,$userLicence,$userAnnee,$userSpecia);
-                echo $userNom.' '.$userPrenom.' '.$userEmail.' '.$userMdp.' '.$userDate.' '.$userType.' '.$userLicence.' '.$userSpecia.' '.$userAnnee;
+                header('location:../membres');
             } elseif (strlen($userMdp)<8) {
                 $msgError = "Mot de passe trop court";
             } elseif (!myCheckDate($userDate)) {

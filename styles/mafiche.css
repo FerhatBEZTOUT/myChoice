@@ -73,6 +73,10 @@ footer {
     border-bottom: 2px solid rgb(17, 128, 231);
 }
 
+.myDiv1 {
+    border-bottom: 2px solid rgb(17, 128, 231);
+}
+
 .myInput:disabled {
     border:none;
     color:black;
@@ -83,4 +87,9 @@ footer {
 
 .monTitre {
     font-size: 15px;
+}
+
+.monContainer {
+    min-height:250px;
+    
 }

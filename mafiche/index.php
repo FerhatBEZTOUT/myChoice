@@ -21,34 +21,45 @@ global $dateD;
 $dateD = false;
 global $dateF;
 $dateF = false;
-
+global $fiche;
 global $listSpecialite;
 
+
 foreach ($ficheVoeux as $f) {
+    
     if ($today >= $f->DateDebut && $today <= $f->DateFin) {
         $fiche = $f;
         $i = 1;
         $specias = getSpecialitesOfFiche($f->idFiche);
         foreach ($specias as $s) {
-            $listSpecialite[$i] = [$s->idSpecialite,getProgrammeSpecialite($s->idSpecialite)];
+            $listSpecialite[$i] = [$s->idSpecialite, getProgrammeSpecialite($s->idSpecialite)];
             $i++;
         }
+
         $trouve = true;
+        
         break;
-    } elseif ($today > $f->DateFin) {
-        $dateF = true;
-    } elseif ($today < $f->DateDebut) {
-        $dateD = true;
-    }
+    }  
 }
 
-if ($trouve) {
-    //  echo '<pre>';
-    //  print_r($listSpecialite);
-    //  echo '</pre>';
-} else {
-    echo 'aucune fiche trouvée';
+if (!$trouve) {
+    foreach ($ficheVoeux as $f) {
+        if ($today < $f->DateDebut) {
+            $dateD = true;
+            $fiche = $f;
+            break;
+        }
+        elseif ($today > $f->DateFin) {
+            $dateF = true;
+            $fiche = $f;
+            break;
+        } 
+        
+    }
+    
 }
+
+
 
 if (isset($_POST['ordre'])) {
 
@@ -73,7 +84,7 @@ if (isset($_POST['ordre'])) {
 
 <body>
     <div class="container-fluid monNavBar">
-        <nav class="monNavBar row navbar navbar-dark bg-dark">
+        <nav class="monNavBar row navbar">
             <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center row mx-auto">
                 <div class="col-12 text-center"><img src="../img/ananas.png" width="50" height="50" class="d-inline-block align-top" alt=""></div>
                 <div class="titre-logo col-12">
@@ -93,16 +104,15 @@ if (isset($_POST['ordre'])) {
 
         </nav>
     </div>
-    
+
     <div class="container py-4 text-center">
         <h2 class="titrePage">Bienvenue <?= $nomUser . ' ' . $prenomUser ?></h2>
     </div>
-    <div class="container d-flex vh-50 justify-content-center align-items-center">
-        <h3>Il n'y a pas de fiche disponible pour l'instant</h3>
-    </div>
-    <?php //remplirSpecialiteFiche() ?>
+    
+    <?php remplirSpecialiteFiche() ?>
 
     <?php include_once '../View/footer.php' ?>
+    <script src="../scripts/fiche.js"></script>
 </body>
 
 </html>
