@@ -4,6 +4,7 @@ include_once '../Controller/specialites.php';
 include_once '../queries/utilisateurs.php';
 include_once '../queries/fiches.php';
 include_once '../queries/specialite.php';
+include_once '../queries/voeux.php';
 
 $errorMsg = "";
 $idUser = $_SESSION['id'];
@@ -23,10 +24,12 @@ global $dateF;
 $dateF = false;
 global $fiche;
 global $listSpecialite;
+$listSpecialite = [];
+
 
 
 foreach ($ficheVoeux as $f) {
-    
+
     if ($today >= $f->DateDebut && $today <= $f->DateFin) {
         $fiche = $f;
         $i = 1;
@@ -37,9 +40,9 @@ foreach ($ficheVoeux as $f) {
         }
 
         $trouve = true;
-        
+
         break;
-    }  
+    }
 }
 
 if (!$trouve) {
@@ -48,23 +51,78 @@ if (!$trouve) {
             $dateD = true;
             $fiche = $f;
             break;
-        }
-        elseif ($today > $f->DateFin) {
+        } elseif ($today > $f->DateFin) {
             $dateF = true;
             $fiche = $f;
             break;
-        } 
-        
+        }
     }
-    
+}
+
+$_SESSION['idFiche'] = $fiche->idFiche;
+
+
+$dejaValide = (int)getVoeuxByUserFiche($idUser, $fiche->idFiche);
+
+$allOk = false;
+
+if (!$dejaValide) {
+    $isset = true;
+    foreach ($listSpecialite as $spec) {
+        if (!isset($_POST['ordre' . $spec[0]]) || $_POST['ordre' . $spec[0]] == '') {
+            $isset = false;
+            break;
+        }
+    }
+
+    if ($isset) {
+        $listValueSpecia = [];
+        foreach ($listSpecialite as $spec) {
+            array_push($listValueSpecia, $_POST['ordre' . $spec[0]]);
+        }
+        $setValueSpecia = array_unique($listValueSpecia);
+        if (sizeof($setValueSpecia) == sizeof($listValueSpecia)) {
+            $i = 1;
+            $sum1 = 0;
+            while ($i <= sizeof($listValueSpecia)) {
+                $sum1 += $i;
+                $i++;
+            }
+            $sum2 = 0;
+            foreach ($listValueSpecia as $v) {
+                $sum2 += intval($v);
+                
+            }
+           
+            if ($sum1 == $sum2 && $sum1>0) {
+                $allOk = true;
+            } elseif ($sum1>0){
+               
+                $errorMsg = 'Vous avez introduis des chiffres erronés';
+            }
+        } elseif (sizeof($setValueSpecia)>0) {
+            
+            $errorMsg = 'Vous avez introduit des spécialités ayant le même ordre';
+        }
+
+        
+        if ($allOk) {
+            $ordreSpecialite = [];
+
+            foreach ($listSpecialite as $s) {
+                $tmp = [$s[0], $_POST['ordre' . $s[0]]];
+                array_push($ordreSpecialite, $tmp);
+            }
+            insertVoeux($idUser, $fiche->idFiche, $ordreSpecialite);
+            header('location:.');
+        }
+    } else {
+        $errorMsg = 'Ordonnez vos voeux';
+    }
 }
 
 
 
-if (isset($_POST['ordre'])) {
-
-    echo $_POST['ordre'];
-}
 
 
 ?>
@@ -108,9 +166,18 @@ if (isset($_POST['ordre'])) {
     <div class="container py-4 text-center">
         <h2 class="titrePage">Bienvenue <?= $nomUser . ' ' . $prenomUser ?></h2>
     </div>
-    
-    <?php remplirSpecialiteFiche() ?>
 
+    <?php
+
+    if ($dejaValide) {
+        afficherDejaValide($idUser);
+    } else {
+        remplirSpecialiteFiche();
+    }
+
+    ?>
+
+    <h6 class="msgError mt-1 mb-3 text-center" id="errorMsgAddFiche"><?= $errorMsg ?></h6>
     <?php include_once '../View/footer.php' ?>
     <script src="../scripts/fiche.js"></script>
 </body>

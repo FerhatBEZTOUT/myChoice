@@ -64,6 +64,7 @@ function remplirSpecialiteFiche() {
     global $trouve;
     global $dateD;
     global $dateF;
+    global $fiche;
     
         if ($trouve && !$listSpecialite) {
         echo '<div class="container d-flex justify-content-center align-items-center monContainer flex-column shadow-lg p-3 mb-5 bg-body rounded">
@@ -86,7 +87,7 @@ function remplirSpecialiteFiche() {
                 </svg>
             </div>
             <h3 class="text-center">Créneau de soumission des voeux pas encore ouvert</h3>
-            <p class="text-center">Revenez plus tard ou contactez votre département pour connaître la date de début de soumission des voeux</p>
+            <p class="text-center">La date de début de soumission des voeux est : <b>'.$fiche->DateDebut.'</b></p>
     
         </div>';
         } elseif ($dateF) {
@@ -97,7 +98,7 @@ function remplirSpecialiteFiche() {
                 </svg>
             </div>
             <h3 class="text-center">Créneau de soumission des voeux fermé</h3>
-            <p class="text-center">Il est trop tard pour soumettre vos voeux, vous avez été automatiquement affecté à une filiére, contactez votre département pour plus d\'informations ou en cas de réclamations</p>
+            <p class="text-center">Il est trop tard pour soumettre vos voeux, le dernier délai était : <b>'.$fiche->DateFin.'</b>. Vous avez été automatiquement affecté à une filiére, contactez votre département pour plus d\'informations ou en cas de réclamations</p>
     
         </div>';
         } else {
@@ -116,6 +117,7 @@ function remplirSpecialiteFiche() {
     }  
     
     else {
+        
         echo '<h5 class="text-center mb-5">Classez les spécialités et validez vos voeux</h5>
         <div class="container px-5">
             <div class="row p-1 d-flex align-items-center justify-content-between myDiv1">
@@ -129,7 +131,7 @@ function remplirSpecialiteFiche() {
                     <h5 class="monTitre text-end">Programme détaillé</h5>
                 </div>
             </div>
-            <form method="POST" action="index.php">';
+            <form method="POST" action="index.php" onsubmit="return confirm(\'Etes-vous sûr de vox voeux ?\');">';
         foreach ($listSpecialite as $s) {
             
             $id =$s[0];
@@ -137,13 +139,13 @@ function remplirSpecialiteFiche() {
             $prog = $s[1];
             echo '<div class="row p-1  d-flex align-items-center myDiv">
             <div class="form-check col-5 col-md-4 ms-4">
-                <input class="form-check-input" type="checkbox" value="'.$id.'" id="spec'.$id.'" name="spec'.$id.'">
-                <label class="form-check-label" for="spec'.$id.'">
+                <input class="form-check-input mySpeciaCheck" type="checkbox" value="'.$id.'" id="spec'.$id.'" name="spec'.$id.'">
+                <label class="form-check-label mySpeciaCheckLabel" for="spec'.$id.'">
                     '.$nomSpecia.'
                 </label>
             </div>
             <div class="col-3 ">
-                <h5 class="text-center"><input class="text-center myInput" type="number" id="ordre'.$id.'" name="ordre'.$id.'" disabled></h5>
+                <h5 class="text-center"><input class="text-center myInput" type="number" id="ordre'.$id.'" name="ordre'.$id.'" readonly></h5>
             </div>
             <div class="col-3 col-md-4 text-end">
                 <a href="http:\\myChoice/dashboard/specialites/programmes/'.$prog.'" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FF0000" class="bi bi-file-earmark-pdf" viewBox="0 0 16 16">
@@ -158,10 +160,10 @@ function remplirSpecialiteFiche() {
         
         }
         
-
+        
     echo '<div class="form-group my-3 text-center">
-    <button class="btn btn-primary" type="submit">Valider</button>
-    <h6 class="msgError mt-3" id="errorMsgAddFiche"><?= $errorMsg ?></h6>
+    <button class="btn btn-primary" type="submit" onclick="">Valider</button>
+    
 </div>
 </form>
 </div>';
@@ -169,4 +171,18 @@ function remplirSpecialiteFiche() {
     
 
 
+}
+
+
+function afficherDejaValide($idUser) {
+     echo '<div class="container d-flex justify-content-center align-items-center monContainer flex-column shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#249109" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </svg>
+    </div>
+    <h3 class="text-center">Voeux validés</h3>
+    <a class="mt-3 btn btn-primary" href="telechargerFiche.php" target="_blank" rel="noopener noreferrer" >Télécharger ma fiche de voeux</a>
+
+</div>';
 }

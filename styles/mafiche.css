@@ -77,10 +77,11 @@ footer {
     border-bottom: 2px solid rgb(17, 128, 231);
 }
 
-.myInput:disabled {
+.myInput {
     border:none;
     color:black;
     width: 40px;
+    background-color: white;
     
     
 }

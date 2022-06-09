@@ -90,7 +90,7 @@ CREATE TABLE Voeux (
 	idSpecialite int,
 	ordre int,
 	
-	CONSTRAINT pk_voeux PRIMARY KEY (idUser,idFiche,idSpecialite),
+	CONSTRAINT pk_voeux PRIMARY KEY (idUser,idFiche,idSpecialite,ordre),
 	CONSTRAINT fk_voeux_utilisateur FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_voeux_ficheVoeux FOREIGN KEY (idFiche) REFERENCES ficheVoeux(idFiche) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_voeux_specialite FOREIGN KEY (idSpecialite) REFERENCES Specialite(idSpecialite) ON DELETE CASCADE ON UPDATE CASCADE
