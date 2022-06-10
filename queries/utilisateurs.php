@@ -1,6 +1,8 @@
 <?php 
     include_once __DIR__.'/../Model/connexionBDD.php';
-
+    include_once __DIR__.'/../queries/fiches.php';
+    include_once __DIR__.'/../queries/moyenne.php';
+    include_once __DIR__.'/../queries/voeux.php';
 
     function getUsers() {
         global $bdd;
@@ -14,6 +16,18 @@
         }
     
         
+    }
+
+    function getUsersBySpecia($id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("SELECT * FROM Utilisateur WHERE specialiteCourante=?");
+            $request->execute(array($id));
+            $result = $request->fetchAll(PDO::FETCH_OBJ);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
 
     function getUserById($id) {
@@ -91,6 +105,40 @@
             echo $e;
         }
     }
+
+
+    function editEtdNoFutur($nom,$prenom,$dateNaiss,$email,$password,$licenceTrois,$anneeCourante,$specialiteCourante,$id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("UPDATE Utilisateur SET nom=?,prenom=?,dateNaiss=?,email=?,password=?,licenceTrois=?,anneeCourante=?,specialiteCourante=?,specialiteFuture=NULL WHERE idUser=?");
+            $request->execute(array($nom,$prenom,$dateNaiss,$email,$password,$licenceTrois,$anneeCourante,$specialiteCourante,$id));
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function editEtdNoPassNoFutur($nom,$prenom,$dateNaiss,$email,$licenceTrois,$anneeCourante,$specialiteCourante,$id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("UPDATE Utilisateur SET nom=?,prenom=?,dateNaiss=?,email=?,licenceTrois=?,anneeCourante=?,specialiteCourante=?,specialiteFuture=NULL WHERE idUser=?");
+            $request->execute(array($nom,$prenom,$dateNaiss,$email,$licenceTrois,$anneeCourante,$specialiteCourante,$id));
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+
+    function updateSpeciaFuture($specialiteCourante,$id) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("UPDATE Utilisateur SET specialiteFuture=? WHERE idUser=?");
+            $request->execute(array($specialiteCourante,$id));
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    
     
     function deleteUser($id) {
         global $bdd;
@@ -113,5 +161,158 @@
         }
     }
 
+    function getNbrUserValide($idFiche) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("SELECT COUNT(DISTINCT idUser) FROM Voeux WHERE idFiche=?");
+            $request->execute(array($idFiche));
+            $result = $request->fetch(PDO::FETCH_NUM);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getNbrUserSpecia($idSpecia) {
+        global $bdd;
+        try {
+            $request = $bdd->prepare("SELECT COUNT(*) FROM Utilisateur WHERE specialiteCourante=?");
+            $request->execute(array($idSpecia));
+            $result = $request->fetch(PDO::FETCH_NUM);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
     
+
+    function orienterEtudiants($id) {
+        $fiche = getFichesById($id);
+        $idFic = $fiche->idFiche;
+        $destin = $fiche->Destination;
+
+        $etudiants = getUsersBySpecia($destin);
+        $specialites = getSpecialitesOfFiche($idFic);
+        foreach ($specialites as $s) {
+            $listSpecia[$s->idSpecialite]=$s->nbrPlaces;
+            
+        }
+        $listEtudiantMoyenne = [];
+        $listVoeux = [];
+        $l3 = (int)$etudiants[0]->licenceTrois;
+        
+        if ($l3) {
+            foreach ($etudiants as $e) {
+                $moyInfos = getMoyenneByUser($e->idUser);
+                foreach ($moyInfos as $m) {
+                    $ann = $m->idAnneeEtud;
+                    if ($ann>0 && $ann<4) {
+                        $moy = $m->moyenne;
+                        $ratt = $m->rattrapage;
+                        $redoub = $m->redouble;
+                        $dett = $m->dette;
+                        $moyTmp[$ann] = moyClassementAnnuelle($moy,$redoub,$dett,$ratt);
+                    }
+                    
+                }
+                
+                $listEtudiantMoyenne[$e->idUser]= (float)($moyTmp[1]+ $moyTmp[2]+ $moyTmp[3])/3;
+                arsort($listEtudiantMoyenne);
+           }
+           echo '<pre>';
+           print_r($listEtudiantMoyenne);
+           echo '</pre>';
+
+           foreach ($listEtudiantMoyenne as $key => $value) {
+            
+            $voeux = getVoeuxByUserFiche($key,$idFic);
+            foreach ($voeux as $v) {
+                $listVoeux[$v->idSpecialite]= $v->ordre;
+            }
+            asort($listVoeux);
+            $oriented = false;
+            foreach ($listVoeux as $idSpec => $ord) {
+                if($listSpecia[$idSpec]>0) {
+                    updateSpeciaFuture($idSpec,$key);
+                    echo '<br><br>==========etudiant '.$key;
+                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
+                    $listSpecia[$idSpec]=$listSpecia[$idSpec]-1;
+                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
+                    $oriented = true;
+                    break;
+                }
+            }
+
+            if(!$oriented) {
+                updateSpeciaFuture($listVoeux[end($listVoeux)],$key);
+                echo '<br><br>==========etudiant '.$key;
+                
+            }
+            // echo '<pre>';
+            // print_r($listVoeux);
+            // echo 'dernier element de voeux :';
+            // echo $listVoeux[end($listVoeux)];
+            // echo '</pre>';
+           }
+           
+        } else {
+            foreach ($etudiants as $e) {
+                $moyInfos = getMoyenneByUserAnnee($e->idUser,$e->anneeCourante);
+                $moy = $moyInfos->moyenne;
+                $ratt = $moyInfos->rattrapage;
+                $redoub = $moyInfos->redouble;
+                $dett = $moyInfos->dette;
+                $moyClassement = moyClassementAnnuelle($moy,$redoub,$dett,$ratt);
+                $listEtudiantMoyenne[$e->idUser]= $moyClassement;
+                arsort($listEtudiantMoyenne);
+           }
+
+           echo '<pre>';
+           print_r($listEtudiantMoyenne);
+           echo '</pre>';
+
+           foreach ($listEtudiantMoyenne as $key => $value) {
+            
+            $voeux = getVoeuxByUserFiche($key,$idFic);
+            foreach ($voeux as $v) {
+                $listVoeux[$v->idSpecialite]= $v->ordre;
+            }
+            asort($listVoeux);
+            $oriented = false;
+            foreach ($listVoeux as $idSpec => $ord) {
+                if($listSpecia[$idSpec]>0) {
+                    updateSpeciaFuture($idSpec,$key);
+                    echo '<br><br>==========etudiant '.$key;
+                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
+                    $listSpecia[$idSpec]=$listSpecia[$idSpec]-1;
+                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
+                    $oriented = true;
+                    break;
+                }
+            }
+
+            if(!$oriented) {
+                updateSpeciaFuture($listVoeux[end($listVoeux)],$key);
+                echo '<br><br>==========etudiant '.$key;
+                
+            }
+            // echo '<pre>';
+            // print_r($listVoeux);
+            // echo 'dernier element de voeux :';
+            // echo $listVoeux[end($listVoeux)];
+            // echo '</pre>';
+           }
+        }
+        
+        setFicheAcheve($idFic);
+    }
+
+
+    function getUsersWithFiche($idFiche) {
+        $spec = getSpecialitesOfFiche($idFiche);
+        $users = getUsersBySpecia($spec);
+
+        return $users;
+
+    }
 ?>

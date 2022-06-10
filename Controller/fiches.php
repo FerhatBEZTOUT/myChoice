@@ -118,5 +118,39 @@ function remplirTableFiche() {
 }
 
 
+function remplirTableFicheResultat() {
+
+    $listFiche = getFiches();
+    foreach ($listFiche as $elem) {
+        $id = $elem->idFiche;
+        $intit = $elem->intituleFiche;
+        $dateDeb = $elem->DateDebut;
+        $dateFin = $elem->DateFin;
+        if ($elem->acheve==1) {
+            $etat ="achevé";
+        } else {
+            $etat = "en cours";
+        }
+        $nomSpec = htmlentities(getNomSpecialite($elem->Destination),ENT_QUOTES,"ISO-8859-1");
+        $msgConfirm = "return confirm('Voulez-vous vraiment supprimer cet élément ?');";
+        echo '<tr>
+        <th scope="row">'.$id.'</th>
+        <td>'.$intit.'</td>
+        <td>'.$dateDeb.'</td>
+        <td>'.$dateFin.'</td>
+        <td>'.$etat.'</td>
+        <td>'.$nomSpec.'</td>
+        <td>
+            <a href="result.php?id='.$id.'"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="rgb(20, 105, 184)" class="bi bi-eye-fill pointer" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+        </svg></a>
+        </td>
+    </tr>';
+    }
+    
+}
+
+
 
 ?>

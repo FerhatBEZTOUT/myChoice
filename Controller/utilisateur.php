@@ -61,6 +61,76 @@ function remplirTableUsers() {
     
 }
 
+function afficherEtudiants($idFiche) {
+    $users = getUsersWithFiche($idFiche);
 
+    $l3 = (int)$users[0]->licenceTrois;
+
+    if ($l3) {
+        foreach ($users as $u) {
+            
+            $moyInfos = getMoyenneByUser($u->idUser);
+            foreach ($moyInfos as $m) {
+                $ann = $m->idAnneeEtud;
+                if ($ann>0 && $ann<4) {
+                    $moy = $m->moyenne;
+                    $ratt = $m->rattrapage;
+                    $redoub = $m->redouble;
+                    $dett = $m->dette;
+                    $moyTmp[$ann] = moyClassementAnnuelle($moy,$redoub,$dett,$ratt);
+                }
+                
+            }
+            
+            $moyClass= sprintf('%.2f', (float)($moyTmp[1]+ $moyTmp[2]+ $moyTmp[3])/3);
+            $id = $u->idUser;
+            $nom = $u->nom;
+            $prenom = $u->prenom;
+            $speciaCour = $u->specialiteCourante;
+            $speciaFutur = $u->specialiteFuture;
+        }
+
+        
+    } else {
+
+    }
+    
+}
 
 ?>
+
+<div class="table-responsive">
+        <table class="table table-hover" id="tableMembres">
+            <form id="filterForm" class="mb-2">
+                <thead class="pb-5">
+                    <tr>
+                        <th scope="col">Recherche</th>
+                        <th scope="col"><input class="form-control" type="text" name="" id="rechNomUser" placeholder="Nom"></th>
+                        <th scope="col"><input class="form-control" type="text" name="" id="rechPrenomUser" placeholder="Prénom"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        
+                        <th scope="col"></th>
+                            
+                    </tr>
+                </thead>
+            </form>
+
+            
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Spécialité courante</th>
+                    <th scope="col">Spécialité orientée</th>
+                    <th scope="col">Moyenne</th>
+                    
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php remplirTableUsers() ?>
+            </tbody>
+        </table>
+    </div>

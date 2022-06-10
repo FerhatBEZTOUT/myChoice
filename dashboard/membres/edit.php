@@ -21,6 +21,7 @@ if (isset($_GET['id'])) {
     $passwordUser = $user->password;
     
     if ($typeUser=='etd') {
+        
         $anneeCouranteUser = $user->anneeCourante;
         $specialiteCouranteUser = $user->specialiteCourante;
         $specialiteFutureUser = $user->specialiteFuture;
@@ -32,8 +33,9 @@ if (isset($_GET['id'])) {
         && isset($_POST['addUserDate'])
         && isset($_POST['addUserAnnee'])
         && isset($_POST['addUserSpecia'])
-        && isset($_POST['addUserSpeciaFuture']))  {
-            
+        && isset($_POST['addUserSpeciaFuture'])
+        && $_POST['addUserSpeciaFuture']!=0)  {
+           
             $userNom = $_POST['addUserNom'];
             $userPrenom = $_POST['addUserPrenom'];
             $userEmail = $_POST['addUserEmail'];
@@ -52,7 +54,7 @@ if (isset($_GET['id'])) {
             
             if (strlen($userMdp)==0) {
                 if (myCheckDate($userDate) && $userAnnee && $userSpecia && $userSpeciaFuture) {
-                 
+                   
                     editEtdNoPass($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$userSpeciaFuture,$id);
                     header("location:../membres");
                 } elseif (!myCheckDate($userDate)) {
@@ -62,7 +64,8 @@ if (isset($_GET['id'])) {
                 } elseif (!$userSpecia) {
                     $msgError = "Choisissez une spécialité courante";
                 } elseif (!$userSpeciaFuture) {
-                    $msgError = "Choisissez une spécialité future";
+                    
+                    editEtdNoPassNoFutur($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$id);
                 } else {
                     $msgError = "Tous les champs doivent être remplis";
                 }
@@ -80,19 +83,98 @@ if (isset($_GET['id'])) {
             } elseif (!$userSpecia) {
                 $msgError = "Choisissez une spécialité courante";
             } elseif (!$userSpeciaFuture) {
-                $msgError = "Choisissez une spécialité future";
+              
+                editEtdNoFutur($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$userLicence,$userAnnee,$userSpecia,$id);
+                
             } else {
                 $msgError = "Tous les champs doivent être remplis";
             }
         
-         } 
+         } elseif (
+            isset($_POST['addUserNom'])
+            && isset($_POST['addUserPrenom'])
+            && isset($_POST['addUserEmail'])
+            && isset($_POST['addUserMdp'])
+            && isset($_POST['addUserDate'])
+            && isset($_POST['addUserAnnee'])
+            && isset($_POST['addUserSpecia'])
+         ) {
+            $userNom = $_POST['addUserNom'];
+            $userPrenom = $_POST['addUserPrenom'];
+            $userEmail = $_POST['addUserEmail'];
+            $userNom =  ucfirst($userNom);
+            $userPrenom = ucfirst($userPrenom);
+            $userMdp = $_POST['addUserMdp'];
+            $userDate = $_POST['addUserDate'];
+            $userAnnee = (int)$_POST['addUserAnnee'];
+            if ($userAnnee == 3) {
+                $userLicence = true;
+            } else {
+                $userLicence = 0;
+            }
+            $userSpecia = (int)$_POST['addUserSpecia'];
+           
+            
+            if (strlen($userMdp)==0) {
+                if (myCheckDate($userDate) && $userAnnee && $userSpecia) {
+                   
+                    editEtdNoPass($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$userSpeciaFuture,$id);
+                    header("location:../membres");
+                } elseif (!myCheckDate($userDate)) {
+                    $msgError = "Date de naissance incorrete";
+                } elseif (!$userAnnee) {
+                    $msgError = "Choisissez une année";
+                } elseif (!$userSpecia) {
+                    $msgError = "Choisissez une spécialité courante";
+                } else {
+                    
+                    editEtdNoPassNoFutur($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$id);
+                    header("location:../membres");
+                } 
+            } 
+            
+            
+            elseif (myCheckDate($userDate) && $userAnnee && $userSpecia && strlen($userMdp)>7) {
+                 $userMdp = md5($userMdp);
+                editEtdNoFutur($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$userLicence,$userAnnee,$userSpecia,$id);
+                header("location:../membres");
+            } elseif (!myCheckDate($userDate)) {
+                $msgError = "Date de naissance incorrete";
+            } elseif (!$userAnnee) {
+                $msgError = "Choisissez une année";
+            } elseif (!$userSpecia) {
+                $msgError = "Choisissez une spécialité courante";
+            } else {
+               
+                $userMdp = md5($userMdp);
+                editEtdNoFutur($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$userLicence,$userAnnee,$userSpecia,$id);
+                header("location:../membres");
+                
+            } 
+         }
         
-    } else {
+    } 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    else {
         if (isset($_POST['addUserNom'])
         && isset($_POST['addUserPrenom'])
         && isset($_POST['addUserEmail'])
         && isset($_POST['addUserMdp'])
         && isset($_POST['addUserDate']))  {
+            
             $userNom = $_POST['addUserNom'];
             $userPrenom = $_POST['addUserPrenom'];
             $userEmail = $_POST['addUserEmail'];
@@ -104,6 +186,7 @@ if (isset($_GET['id'])) {
 
             if (strlen($userMdp)==0) {
                 if (myCheckDate($userDate)) {
+                   
                     editAdminNoPass($userNom,$userPrenom,$userDate,$userEmail,$id);
                     header("location:../membres");
                 }
@@ -115,6 +198,7 @@ if (isset($_GET['id'])) {
             }
             elseif (myCheckDate($userDate) && strlen($userMdp)>7) {
                 $userMdp = md5($userMdp);
+                
                 editAdmin($userNom,$userPrenom,$userDate,$userEmail,$userMdp,$id);
                 header("location:../membres");
             }

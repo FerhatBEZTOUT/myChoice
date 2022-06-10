@@ -39,8 +39,11 @@
                     <h6 class="text-center">MyChoice</h6>
                 </div>
             </div>
-            <div class="col-10 col-sm-10">
+            <div class="col-9 col-sm-8">
                 <h1 class="titre-page-connexion text-center">MyChoice</h1>
+            </div>
+            <div class="col-1 col-sm-2">
+               
             </div>
         </nav>
     </div>

@@ -20,7 +20,7 @@ function insertVoeux($id,$idFiche,$specialiteOrdre) {
 function getVoeuxByUserFiche($idUser,$idFiche) {
     global $bdd;
     try {
-        $request = $bdd->prepare("SELECT * FROM Voeux WHERE idUser=? AND idFiche=?");
+        $request = $bdd->prepare("SELECT idSpecialite,ordre FROM Voeux WHERE idUser=? AND idFiche=?");
         $request->execute(array($idUser,$idFiche));
         $result = $request->fetchAll(PDO::FETCH_OBJ);
         return $result;
@@ -30,6 +30,8 @@ function getVoeuxByUserFiche($idUser,$idFiche) {
 
     
 }
+
+
 
 
 ?>

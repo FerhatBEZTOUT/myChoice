@@ -1,5 +1,6 @@
 <?php 
     include_once __DIR__.'/../Model/connexionBDD.php';
+    include_once __DIR__.'/../queries/utilisateurs.php';
 
 function getFiches() {
     global $bdd;
@@ -57,6 +58,21 @@ function getSpecialitesOfFiche($fiche) {
     
 }
 
+
+function specialitesFiche($idFiche) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT * FROM SpecialiteFiche WHERE idFiche=?");
+        $request->execute(array($idFiche));
+        $result = $request->fetchAll(PDO::FETCH_OBJ);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
+
+
 function addFiche($intitule,$dateDeb,$dateFin,$destin) {
     global $bdd;
     try {
@@ -91,17 +107,7 @@ function deleteFiche($id) {
 }
 
 
-function specialitesFiche($idFiche) {
-    global $bdd;
-    try {
-        $request = $bdd->prepare("SELECT * FROM SpecialiteFiche WHERE idFiche=?");
-        $request->execute(array($idFiche));
-        $result = $request->fetchAll(PDO::FETCH_OBJ);
-        return $result;
-    } catch (PDOException $e) {
-        echo $e;
-    }
-}
+
 
 
 function existSpecialitesFiche($idFiche,$idSpecia) {
@@ -134,6 +140,37 @@ function deleteSpecialiteFiche($id,$idSpecia) {
     try {
         $request = $bdd->prepare("DELETE FROM SpecialiteFiche WHERE idFiche=? AND idSpecialite=?");
         $request->execute(array($id,$idSpecia));
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
+
+function ficheAchevee($idFiche) {
+    $fiche = getFichesById($idFiche);
+    if (getNbrUserSpecia($fiche->Destination)==getNbrUserValide($idFiche)) {
+        return true;
+    }
+    return false;
+}
+
+function setFicheAcheve($idFiche) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("UPDATE FicheVoeux SET acheve=true WHERE idFiche=?");
+        $request->execute(array($idFiche));
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
+function getEtatFiche($idFiche) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT acheve FROM FicheVoeux WHERE idFiche=?");
+        $request->execute(array($idFiche));
+        $result = $request->fetch(PDO::FETCH_OBJ);
+        return $result;
     } catch (PDOException $e) {
         echo $e;
     }
