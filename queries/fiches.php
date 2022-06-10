@@ -169,8 +169,8 @@ function getEtatFiche($idFiche) {
     try {
         $request = $bdd->prepare("SELECT acheve FROM FicheVoeux WHERE idFiche=?");
         $request->execute(array($idFiche));
-        $result = $request->fetch(PDO::FETCH_OBJ);
-        return $result;
+        $result = $request->fetch(PDO::FETCH_NUM);
+        return (int)$result[0];
     } catch (PDOException $e) {
         echo $e;
     }

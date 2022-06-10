@@ -65,7 +65,46 @@ function afficherEtudiants($idFiche) {
     $users = getUsersWithFiche($idFiche);
 
     $l3 = (int)$users[0]->licenceTrois;
+    echo '
+    
+        <button class="btn btn-success mb-5" id="exportToExcelBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
+        <path d="M6 12v-2h3v2H6z"/>
+        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z"/>
+      </svg> Exporter vers Excel
+        </button>
+    
+    <div class="table-responsive">
+    <table class="table table-hover" id="tableMembres">
+        <form id="filterForm" class="mb-2">
+            <thead class="pb-5">
+                <tr>
+                    <th scope="col">Recherche</th>
+                    <th scope="col"><input class="form-control" type="text" name="" placeholder="Nom" onkeyup="filterResult()" id="rechResNom"></th>
+                    <th scope="col"><input class="form-control" type="text" name="" placeholder="Prénom" onkeyup="filterResult()" id="rechResPrenom"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    
+                    <th scope="col"></th>
+                        
+                </tr>
+            </thead>
+        </form>
 
+        
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Spécialité courante</th>
+                <th scope="col">Spécialité orientée</th>
+                <th scope="col">Moyenne</th>
+                
+
+            </tr>
+        </thead>
+        <tbody>';
     if ($l3) {
         foreach ($users as $u) {
             
@@ -86,51 +125,97 @@ function afficherEtudiants($idFiche) {
             $id = $u->idUser;
             $nom = $u->nom;
             $prenom = $u->prenom;
-            $speciaCour = $u->specialiteCourante;
-            $speciaFutur = $u->specialiteFuture;
+            $speciaCour = htmlentities(getNomSpecialite($u->specialiteCourante),ENT_QUOTES,"ISO-8859-1"); 
+            $speciaFutur = htmlentities(getNomSpecialite($u->specialiteFuture),ENT_QUOTES,"ISO-8859-1");
+
+            echo '<tr>
+        <th scope="row">'.$id.'</th>
+        <td>'.$nom.'</td>
+        <td>'.$prenom.'</td>
+        <td>'.$speciaCour.'</td>
+        <td>'.$speciaFutur.'</td>
+        <td>'.$moyClass.'</td>
+       
+    </tr>';
+
+
         }
 
         
     } else {
+        foreach ($users as $u) {
+            
+            $m = getMoyenneByUserAnnee($u->idUser,$u->anneeCourante);
+        
+            $moy = $m->moyenne;
+            $ratt = $m->rattrapage;
+            $redoub = $m->redouble;
+            $dett = $m->dette;     
+            $moyClass= sprintf('%.2f', (float)(moyClassementAnnuelle($moy,$redoub,$dett,$ratt)));
+            $id = $u->idUser;
+            $nom = $u->nom;
+            $prenom = $u->prenom;
+            $speciaCour = htmlentities(getNomSpecialite($u->specialiteCourante),ENT_QUOTES,"ISO-8859-1"); 
+            $speciaFutur = htmlentities(getNomSpecialite($u->specialiteFuture),ENT_QUOTES,"ISO-8859-1");
 
+            echo '<tr>
+        <th scope="row">'.$id.'</th>
+        <td>'.$nom.'</td>
+        <td>'.$prenom.'</td>
+        <td>'.$speciaCour.'</td>
+        <td>'.$speciaFutur.'</td>
+        <td>'.$moyClass.'</td>
+       
+    </tr>';
+
+
+        }
     }
+
+    echo ' </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" src="table2excel.js"></script>
+<script>
+
+document.getElementById("exportToExcelBtn").addEventListener("click",function() {
+    var table2excel = new Table2Excel();
+    table2excel.export(document.querySelectorAll("#tableMembres"),"résultats-orientation");
+});
+
+
+function filterResult() {
+  var nom = document.getElementById("rechResNom").value.toUpperCase();
+  var prenom = document.getElementById("rechResPrenom").value.toUpperCase();
+
+  var table = document.getElementById("tableMembres");
+  var allTr = table.getElementsByTagName("tr");
+
+  for (var i = 2; i < allTr.length; i++) {
+    var nomTd = allTr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+    var prenomTd = allTr[i].getElementsByTagName("td")[1].innerText.toUpperCase();
+    
+
+    if (
+      nomTd.indexOf(nom) == 0
+      && prenomTd.indexOf(prenom) == 0
+    ) {
+      allTr[i].style.display = ""
+    } else {
+      allTr[i].style.display = "none"
+    }
+
+
+  }
+}
+</script>
+    
+
+';
     
 }
 
 ?>
 
-<div class="table-responsive">
-        <table class="table table-hover" id="tableMembres">
-            <form id="filterForm" class="mb-2">
-                <thead class="pb-5">
-                    <tr>
-                        <th scope="col">Recherche</th>
-                        <th scope="col"><input class="form-control" type="text" name="" id="rechNomUser" placeholder="Nom"></th>
-                        <th scope="col"><input class="form-control" type="text" name="" id="rechPrenomUser" placeholder="Prénom"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        
-                        <th scope="col"></th>
-                            
-                    </tr>
-                </thead>
-            </form>
 
-            
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Spécialité courante</th>
-                    <th scope="col">Spécialité orientée</th>
-                    <th scope="col">Moyenne</th>
-                    
-
-                </tr>
-            </thead>
-            <tbody>
-                <?php remplirTableUsers() ?>
-            </tbody>
-        </table>
-    </div>

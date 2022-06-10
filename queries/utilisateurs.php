@@ -219,9 +219,7 @@
                 $listEtudiantMoyenne[$e->idUser]= (float)($moyTmp[1]+ $moyTmp[2]+ $moyTmp[3])/3;
                 arsort($listEtudiantMoyenne);
            }
-           echo '<pre>';
-           print_r($listEtudiantMoyenne);
-           echo '</pre>';
+           
 
            foreach ($listEtudiantMoyenne as $key => $value) {
             
@@ -234,10 +232,7 @@
             foreach ($listVoeux as $idSpec => $ord) {
                 if($listSpecia[$idSpec]>0) {
                     updateSpeciaFuture($idSpec,$key);
-                    echo '<br><br>==========etudiant '.$key;
-                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
                     $listSpecia[$idSpec]=$listSpecia[$idSpec]-1;
-                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
                     $oriented = true;
                     break;
                 }
@@ -245,14 +240,10 @@
 
             if(!$oriented) {
                 updateSpeciaFuture($listVoeux[end($listVoeux)],$key);
-                echo '<br><br>==========etudiant '.$key;
+                
                 
             }
-            // echo '<pre>';
-            // print_r($listVoeux);
-            // echo 'dernier element de voeux :';
-            // echo $listVoeux[end($listVoeux)];
-            // echo '</pre>';
+           
            }
            
         } else {
@@ -267,9 +258,7 @@
                 arsort($listEtudiantMoyenne);
            }
 
-           echo '<pre>';
-           print_r($listEtudiantMoyenne);
-           echo '</pre>';
+           
 
            foreach ($listEtudiantMoyenne as $key => $value) {
             
@@ -282,10 +271,7 @@
             foreach ($listVoeux as $idSpec => $ord) {
                 if($listSpecia[$idSpec]>0) {
                     updateSpeciaFuture($idSpec,$key);
-                    echo '<br><br>==========etudiant '.$key;
-                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
                     $listSpecia[$idSpec]=$listSpecia[$idSpec]-1;
-                    echo '<br>nombre place specia['.$idSpec.']:'.$listSpecia[$idSpec];
                     $oriented = true;
                     break;
                 }
@@ -293,14 +279,9 @@
 
             if(!$oriented) {
                 updateSpeciaFuture($listVoeux[end($listVoeux)],$key);
-                echo '<br><br>==========etudiant '.$key;
-                
+               
             }
-            // echo '<pre>';
-            // print_r($listVoeux);
-            // echo 'dernier element de voeux :';
-            // echo $listVoeux[end($listVoeux)];
-            // echo '</pre>';
+            
            }
         }
         
@@ -309,8 +290,9 @@
 
 
     function getUsersWithFiche($idFiche) {
-        $spec = getSpecialitesOfFiche($idFiche);
-        $users = getUsersBySpecia($spec);
+        $spec = getFichesById($idFiche);
+        $dest = $spec->Destination;
+        $users = getUsersBySpecia($dest);
 
         return $users;
 

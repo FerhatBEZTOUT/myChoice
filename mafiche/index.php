@@ -114,6 +114,9 @@ if (!$dejaValide) {
                 array_push($ordreSpecialite, $tmp);
             }
             insertVoeux($idUser, $fiche->idFiche, $ordreSpecialite);
+             if(ficheAchevee($fiche->idFiche)) {
+                 orienterEtudiants($fiche->idFiche);
+             }
             header('location:.');
         }
     } else {
