@@ -12,8 +12,8 @@
 
 Compte admin : 
     email : sofiane.aissani@univ-bejaia.dz
-    password : 1970-01-01
+    password : ma3dnous
 
 Compte etudiant :
-    email : ferhat.beztout@se-univ-bejaia.dz 
-    password : 1997-02-03
+    email : ferhat.beztout@univ-bejaia.dz 
+    password : ma3dnous
