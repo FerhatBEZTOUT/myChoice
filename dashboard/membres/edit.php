@@ -7,6 +7,7 @@ include_once '../../View/header.php';
 include_once '../../Model/Utilisateur.php';
 include_once '../../Controller/checkData.php';
 include_once '../../queries/utilisateurs.php';
+include_once '../../queries/moyenne.php';
 $msgError = "";
 
 if (isset($_GET['id'])) {
@@ -22,6 +23,46 @@ if (isset($_GET['id'])) {
     
     if ($typeUser=='etd') {
         
+        $mL1 = getMoyenneByUserAnnee($id,1);
+        $mL2 = getMoyenneByUserAnnee($id,2);
+        $mL3 = getMoyenneByUserAnnee($id,3);
+        $mM1 = getMoyenneByUserAnnee($id,4);
+        $mM2 = getMoyenneByUserAnnee($id,5);
+        if ($mL1) {
+            $moyL1 = $mL1->moyenne;
+            } else {
+                $moyL1 = '';
+            }
+
+        if ($mL2) {
+            $moyL2 = $mL2->moyenne;
+            } else {
+                $moyL2 = '';
+            }
+
+        if ($mL3) {
+            $moyL3 = $mL3->moyenne;
+            } else {
+                $moyL3 = '';
+            }
+
+        if ($mM1) {
+            $moyM1 = $mM1->moyenne;
+            } else {
+                $moyM1 = '';
+            }
+
+        if ($mM2) {
+            $moyM2 = $mM2->moyenne;
+            } else {
+                $moyM2 = '';
+            }
+        
+        
+        
+        
+        
+
         $anneeCouranteUser = $user->anneeCourante;
         $specialiteCouranteUser = $user->specialiteCourante;
         $specialiteFutureUser = $user->specialiteFuture;
@@ -54,7 +95,102 @@ if (isset($_GET['id'])) {
             
             if (strlen($userMdp)==0) {
                 if (myCheckDate($userDate) && $userAnnee && $userSpecia && $userSpeciaFuture) {
-                   
+                    if(isset($_POST['moyL1'])) {
+                        
+                        if($_POST['moyL1']>=0 && $_POST['moyL1']<=20) {
+                            $moyData = getMoyenneByUserAnneeSpecia($id,1,$specialiteCouranteUser);
+                            if($moyData) {
+                                $ratt = $moyData->rattrapage;
+                                $redd = $moyData->redouble;
+                                $dett = $moyData->dette;
+                            } else {
+                                $ratt = 0;
+                                $redd = 0;
+                                $dett = 0;
+                            }
+                            
+                            replaceMoy($id,1,$specialiteCouranteUser,(float)$_POST['moyL1'],$ratt,$redd,$dett);
+                        } else {
+                            $msgError = 'Moyenne L1 doit être entre 0 et 20';
+                        }
+                    }
+
+                    if(isset($_POST['moyL2'])) {
+                        if($_POST['moyL2']>=0 && $_POST['moyL2']<=20) {
+                            $moyData = getMoyenneByUserAnneeSpecia($id,2,$specialiteCouranteUser);
+                            if($moyData) {
+                                $ratt = $moyData->rattrapage;
+                                $redd = $moyData->redouble;
+                                $dett = $moyData->dette;
+                            } else {
+                                $ratt = 0;
+                                $redd = 0;
+                                $dett = 0;
+                            }
+                            
+                            replaceMoy($id,1,$specialiteCouranteUser,(float)$_POST['moyL2'],$ratt,$redd,$dett);
+                        } else {
+                            $msgError = 'Moyenne L2 doit être entre 0 et 20';
+                        }
+                    }
+
+                    if(isset($_POST['moyL3'])) {
+                        if($_POST['moyL3']>=0 && $_POST['moyL3']<=20) {
+                            $moyData = getMoyenneByUserAnneeSpecia($id,1,$specialiteCouranteUser);
+                            if($moyData) {
+                                $ratt = $moyData->rattrapage;
+                                $redd = $moyData->redouble;
+                                $dett = $moyData->dette;
+                            } else {
+                                $ratt = 0;
+                                $redd = 0;
+                                $dett = 0;
+                            }
+                            
+                            replaceMoy($id,1,$specialiteCouranteUser,(float)$_POST['moyL3'],$ratt,$redd,$dett);
+                        } else {
+                            $msgError = 'Moyenne L3 doit être entre 0 et 20';
+                        }
+                    }
+
+                    if(isset($_POST['moyM1'])) {
+                        if($_POST['moyM1']>=0 && $_POST['moyM1']<=20) {
+                            $moyData = getMoyenneByUserAnneeSpecia($id,1,$specialiteCouranteUser);
+                            if($moyData) {
+                                $ratt = $moyData->rattrapage;
+                                $redd = $moyData->redouble;
+                                $dett = $moyData->dette;
+                            } else {
+                                $ratt = 0;
+                                $redd = 0;
+                                $dett = 0;
+                            }
+                            
+                            replaceMoy($id,1,$specialiteCouranteUser,(float)$_POST['moyM1'],$ratt,$redd,$dett);
+                        } else {
+                            $msgError = 'Moyenne M1 doit être entre 0 et 20';
+                        }
+                    }
+
+                    if(isset($_POST['moyM2'])) {
+                        if($_POST['moyM2']>=0 && $_POST['moyM2']<=20) {
+                            $moyData = getMoyenneByUserAnneeSpecia($id,1,$specialiteCouranteUser);
+                            if($moyData) {
+                                $ratt = $moyData->rattrapage;
+                                $redd = $moyData->redouble;
+                                $dett = $moyData->dette;
+                            } else {
+                                $ratt = 0;
+                                $redd = 0;
+                                $dett = 0;
+                            }
+                            
+                            replaceMoy($id,1,$specialiteCouranteUser,(float)$_POST['moyM2'],$ratt,$redd,$dett);
+                        } else {
+                            $msgError = 'Moyenne M2 doit être entre 0 et 20';
+                        }
+                    }
+
                     editEtdNoPass($userNom,$userPrenom,$userDate,$userEmail,$userLicence,$userAnnee,$userSpecia,$userSpeciaFuture,$id);
                     header("location:../membres");
                 } elseif (!myCheckDate($userDate)) {
@@ -282,6 +418,32 @@ if (isset($_GET['id'])) {
                 <?php if ($typeUser=='etd') remplirSpeciaWithValue($specialiteFutureUser) ?>
             </select>
         </div>
+        
+        <div class="form-control ml-2 mb-3 row d-flex justify-content-around" id="moyenneDiv">
+        <label class="myLabel" for="moyenneDiv">Moyennes annuelles</label>
+            <div class="col-2 row">
+                <label for="moyL1">Licence 1</label>
+                <input type="number" name="moyL1" id="moyL1" value="<?php if ($typeUser=='etd' && $moyL1) echo sprintf('%.2f',htmlentities($moyL1)) ?>" step="any">
+            </div>
+
+            <div class="col-2 row">
+                <label for="moyL2">Licence 2</label>
+                <input type="number" name="moyL2" id="moyL2" value="<?php if ($typeUser=='etd' && $moyL2) echo sprintf('%.2f',htmlentities($moyL2)) ?>" step="any">
+            </div>
+            <div class="col-2 row">
+                <label for="moyL3">Licence 3</label>
+                <input type="number" name="moyL3" id="moyL3" value="<?php if ($typeUser=='etd' && $moyL3) echo sprintf('%.2f',htmlentities($moyL3)) ?>" step="any">
+            </div>
+            <div class="col-2 row">
+                <label for="moyM1">Master 1</label>
+                <input type="number" name="moyM1" id="moyM1" value="<?php if ($typeUser=='etd' && $moyM1) echo sprintf('%.2f',htmlentities($moyM1))  ?>" step="any">
+            </div>
+            <div class="col-2 row">
+                <label for="moyM2">Master 2</label>
+                <input type="number" name="moyM2" id="moyM2" value="<?php if ($typeUser=='etd' && $moyM2) echo sprintf('%.2f',htmlentities($moyM2)) ?>" step="any">
+            </div>
+            
+        </div>
 
         <div class="form-group mb-3 text-center">
             <button class="btn btn-primary" type="submit">Modifier</button>
@@ -302,6 +464,8 @@ if (isset($_GET['id'])) {
         document.getElementById("addUserSpeciaDiv").removeAttribute("required");
         document.getElementById("addUserSpeciaFutureDiv").style.display="none";
         document.getElementById("addUserAnneeDiv").removeAttribute("required");
+        document.getElementById("moyenneDiv").classList.remove("d-flex");
+        document.getElementById("moyenneDiv").style.display="none";
         </script>';
     }
 

@@ -116,43 +116,43 @@ INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Réseaux et systèmes 
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ('Ingénierie de la connaissance',4);		-- 8
 INSERT INTO Specialite(nomSpecialite,anneeDebut) VALUES ("Informatique (R.N)",2);		-- 9
 
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 1","2022-04-27","2022-05-27",false,9);		-- 1
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 2","2022-04-27","2022-05-27",false,2);		-- 2
-INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 3","2022-04-27","2022-05-27",false,3);		-- 3
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 1","2022-04-27","2022-07-27",false,9);		-- 1
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 2","2022-04-27","2022-07-27",false,3);		-- 2
+INSERT INTO FicheVoeux (intituleFiche,DateDebut,DateFin,acheve,destination) VALUES ("Fiche 3","2023-04-27","2022-07-27",false,3);		-- 3
 
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,1,20);
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,2,30);
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,4,20);
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,5,40);
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,7,10);
-INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,8,30);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,1,2);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (1,2,2);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,4,1);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,5,1);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,7,1);
+INSERT INTO SpecialiteFiche(idFiche,idSpecialite,nbrPlaces) VALUES (2,8,1);
 
 
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('beztout','ferhat','1997-02-03','ferhat.beztout@se.univ-bejaia.dz','1997-02-03',false,'etd',true,2,3);
+VALUES ('beztout','ferhat','1997-02-03','ferhat.beztout@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,3,3);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('beztout','thirinasse','2001-09-29','thirinasse.beztout@se.univ-bejaia.dz','2001-09-29',false,'etd',true,2,3);
+VALUES ('beztout','thirinasse','2001-09-29','thirinasse.beztout@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,2,9);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('boudjaoui','imene','2002-01-12','imene.boudjaoui@se.univ-bejaia.dz','2002-01-12',false,'etd',true,2,3);
+VALUES ('boudjaoui','imene','2002-01-12','imene.boudjaoui@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,3,3);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('boubadra ','melissa','2001-04-10','melissa.boubadra @se.univ-bejaia.dz','2001-04-10',false,'etd',true,2,3);
+VALUES ('boubadra ','melissa','2001-04-10','melissa.boubadra@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,3,3);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('berreguia','rahma','2000-02-24','rahma.berreguia@se.univ-bejaia.dz','2000-02-24',false,'etd',true,3,3);
+VALUES ('berreguia','rahma','2000-02-24','rahma.berreguia@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,3,3);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('bouamama','melissa','2001-03-03','melissa.bouamama@se.univ-bejaia.dz','2001-03-03',false,'etd',true,3,3);
+VALUES ('bouamama','melissa','2001-03-03','melissa.bouamama@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,2,9);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('bournine','ikram','2002-01-30','ikram.bournine@se.univ-bejaia.dz','2002-01-30',false,'etd',true,3,3);
+VALUES ('bournine','ikram','2002-01-30','ikram.bournine@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',false,'etd',true,2,9);
 INSERT INTO Utilisateur(nom,prenom,dateNaiss,email,password,isAdmin,userType,licenceTrois,anneeCourante,specialiteCourante) 
-VALUES ('aissani','sofiane','1970-01-01','sofiane.aissani@univ-bejaia.dz','1970-01-01',true,'admin',false,NULL,NULL);
+VALUES ('aissani','sofiane','1970-01-01','sofiane.aissani@univ-bejaia.dz','6a6715536bedbbdecf2bcb330d2dc52e',true,'admin',false,NULL,NULL);
 
 
 INSERT INTO Moyenne VALUES (1000,1,3,12.5,0,0,0);
 INSERT INTO Moyenne VALUES (1000,2,3,10.45,1,0,0);
 INSERT INTO Moyenne VALUES (1000,3,3,12.5,0,0,0);
 
-INSERT INTO Moyenne VALUES (1001,1,3,15,0,0,0);
-INSERT INTO Moyenne VALUES (1001,2,3,12.45,0,0,0);
-INSERT INTO Moyenne VALUES (1001,3,3,10,1,1,0);
+INSERT INTO Moyenne VALUES (1001,1,9,15,0,0,0);
+INSERT INTO Moyenne VALUES (1001,2,9,12.45,0,0,0);
+INSERT INTO Moyenne VALUES (1001,3,9,10,1,1,0);
 
 INSERT INTO Moyenne VALUES (1002,1,3,14,0,0,0);
 INSERT INTO Moyenne VALUES (1002,2,3,11.45,0,0,0);
@@ -166,10 +166,10 @@ INSERT INTO Moyenne VALUES (1004,1,3,10,0,0,0);
 INSERT INTO Moyenne VALUES (1004,2,3,11.45,0,0,0);
 INSERT INTO Moyenne VALUES (1004,3,3,12.5,0,0,0);
 
-INSERT INTO Moyenne VALUES (1005,1,3,15.21,0,0,0);
-INSERT INTO Moyenne VALUES (1005,2,3,15.45,0,0,0);
-INSERT INTO Moyenne VALUES (1005,3,3,16.5,0,0,0);
+INSERT INTO Moyenne VALUES (1005,1,9,15.21,0,0,0);
+INSERT INTO Moyenne VALUES (1005,2,9,15.45,0,0,0);
+INSERT INTO Moyenne VALUES (1005,3,9,16.5,0,0,0);
 
-INSERT INTO Moyenne VALUES (1006,1,3,12,0,0,0);
-INSERT INTO Moyenne VALUES (1006,2,3,12.65,0,0,0);
-INSERT INTO Moyenne VALUES (1006,3,3,10.63,1,0,0);
+INSERT INTO Moyenne VALUES (1006,1,9,12,0,0,0);
+INSERT INTO Moyenne VALUES (1006,2,9,12.65,0,0,0);
+INSERT INTO Moyenne VALUES (1006,3,9,10.63,1,0,0);

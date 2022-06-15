@@ -51,4 +51,15 @@ function moyClassementLicence($moyL1,$moyL2,$moyL3,$nbrRedouble,$nbrDette,$nbrRa
      return  $moyGenerale*(1 - 0.04*($nbrRedouble + ($nbrDette)/2 + $nbrRattrap/4));
  }
 
+
+function replaceMoy($idUser,$annee,$specia,$moy,$ratt,$redd,$dett) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("REPLACE INTO Moyenne(idUser,idAnneeEtud,idSpecialite,moyenne,rattrapage,redouble,dette) VALUES (?,?,?,?,?,?,?)");
+        $request->execute(array($idUser,$annee,$specia,$moy,$ratt,$redd,$dett));
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
+
 ?>
