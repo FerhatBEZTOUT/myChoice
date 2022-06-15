@@ -7,6 +7,7 @@ include_once '../../queries/fiches.php';
 include_once '../../Controller/fiches.php';
 include_once '../../Controller/specialites.php';
 $msgError = "";
+global $arraySpecia;
 $arraySpecia = [];
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
@@ -74,9 +75,9 @@ if (isset($_GET['id'])) {
                 insertSpecialiteFiche($id,$idSpecia,$nbrplc);
             } else {
                 deleteSpecialiteFiche($id,$idSpecia);
+                
             }
         }
-
 
         ?>
         <div class="form-group mb-3">

@@ -8,7 +8,6 @@ deleteFiche($id);
 header("location: ../fiches");
 ?>
 
-
 <?php
 include_once '../../View/footer.php';
 ?>

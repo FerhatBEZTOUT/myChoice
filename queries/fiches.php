@@ -177,6 +177,16 @@ function getEtatFiche($idFiche) {
 }
 
 
-
+function getYearFiche($dest) {
+    global $bdd;
+    try {
+        $request = $bdd->prepare("SELECT YEAR(DateDebut) FROM FicheVoeux WHERE Destination=?");
+        $request->execute(array($dest));
+        $result = $request->fetchAll(PDO::FETCH_NUM);
+        return $result;
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
 
 ?>

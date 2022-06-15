@@ -24,8 +24,29 @@ if (
         if ($dateFin<$dateDeb) {
             $msgError = "Date fin doit être supérieur à date début";
         } else {
-            addFiche($intitule,$dateDeb,$dateFin,$destin);
-          header("location:../fiches");
+            $yearExist = false;
+            $yearDebut = substr($dateDeb, 0, 4);
+        
+            $years = getYearFiche($destin);
+            foreach ($years as $y) {
+                
+                
+                if (strcmp($y[0],$yearDebut)==0) {
+                    $yearExist = true;
+                  
+                } else {
+                   
+                }
+            }
+        
+        
+            if ($yearExist) {
+                $msgError = "Une fiche pour la spécialité choisie existe déjà pour cette année";
+            } else {
+                addFiche($intitule,$dateDeb,$dateFin,$destin);
+                header("location:../fiches");
+            }
+            
         }
     } else if (!$intitule && !myCheckDate($dateDeb) && !myCheckDate($dateFin) && !$destin) {
         $msgError = "Tous les champs sont incorrects ou incomplets";
@@ -73,11 +94,11 @@ if (
         </div>
 
         <div class="form-group mb-3">
-            <label class="myLabel"  for="addDateFin">Date début</label>
+            <label class="myLabel"  for="addDateFin">Date fin</label>
             <input class="form-control" type="text" name="addDateFin" id="addDateFin" placeholder="Date fin" autocomplete="off" required>
         </div>
         <div class="form-group mb-3">
-        <label class="myLabel" for="addDateFin">Fiche de voeux destinée pour :</label>
+        <label class="myLabel" for="addDateFin">Spécialité concernée :</label>
         <select class="form-select" aria-label="Etat" id="addDestination" name="addDestination" required>
             <option value="0" selected>Choisir une spécialité</option>
             <?php remplirOptionsSpecialite() ?>
